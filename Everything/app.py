@@ -19,6 +19,9 @@ DB_CONFIG = {
     'raise_on_warnings': True
 }
 
+print("🔧 DEBUG Render DB Config (at startup):", DB_CONFIG)
+
+
 SQL_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "c.sql")
 # --- Database Setup ---
 def setup_database():
