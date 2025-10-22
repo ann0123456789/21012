@@ -2600,70 +2600,13 @@ def get_course_students_progress(unit_id):
     except mysql.connector.Error as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
+# ============================================================
+# 🔚 APP ENTRY POINT
+# ============================================================
 if __name__ == "__main__":
-    
-    @app.route("/api/student/profile", methods=["GET"])
-    def get_student_profile():
-        student_id = session.get("user_id")
-        if not student_id:
-            return jsonify({"status": "error", "message": "Not logged in"}), 401
-
-        db = get_db()
-        cursor = db.cursor(dictionary=True)
-        try:
-            cursor.execute("""
-                SELECT 
-                    s.First_name, 
-                    s.Last_name, 
-                    s.Activity,
-                    l.email,
-                    l.password_hash
-                FROM Students s
-                JOIN Logins l ON s.Student_id = l.user_ref_id
-                WHERE s.Student_id = %s AND l.user_type = 'student'
-            """, (student_id,))
-            profile = cursor.fetchone()
-
-            if not profile:
-                return jsonify({"status": "error", "message": "Profile not found"}), 404
-
-            return jsonify({
-                "status": "success",
-                "profile": {
-                    "title": "Ms", 
-                    "firstName": profile["First_name"],
-                    "lastName": profile["Last_name"],
-                    "email": profile["email"],
-                    "password": profile["password_hash"],
-                    "status": profile["Activity"]
-                }
-            })
-        except mysql.connector.Error as e:
-            return jsonify({"status": "error", "message": str(e)}), 500
-
-    @app.route("/api/student/profile", methods=["PUT"])
-    def update_student_profile():
-        student_id = session.get("user_id")
-        if not student_id:
-            return jsonify({"status": "error", "message": "Not logged in"}), 401
-
-        data = request.get_json()
-        if not data:
-            return jsonify({"status": "error", "message": "Invalid data"}), 400
-
-        db = get_db()
-        cursor = db.cursor()
-        try:
-            cursor.execute("UPDATE Students SET First_name = %s, Last_name = %s WHERE Student_id = %s",
-                           (data.get("firstName"), data.get("lastName"), student_id))
-            cursor.execute("UPDATE Logins SET email = %s, password_hash = %s WHERE user_ref_id = %s AND user_type = 'student'",
-                           (data.get("email"), data.get("password"), student_id))
-            db.commit()
-            return jsonify({"status": "success", "message": "Profile updated successfully"})
-        except mysql.connector.Error as e:
-            db.rollback()
-            return jsonify({"status": "error", "message": str(e)}), 500
-
-    if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
-        setup_database()
-    app.run(debug=True, host='0.0.0.0')
+    # Run setup locally to build DB schema
+    setup_database()
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 10000)), debug=True)
+else:
+    # When deployed (e.g., on Railway), this runs on import
+    setup_database()
