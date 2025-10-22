@@ -11,12 +11,14 @@ CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5500", "http://l
 
 # --- Database Configuration ---
 DB_CONFIG = {
-    'user': 'root',
-    'password': 'pO)pO)pO)', # <-- IMPORTANT: Change this!
-    'host': '127.0.0.1',
-    'database': 'c_db', # <-- Name of your database schema
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'port': int(os.getenv('DB_PORT', 3306)),  # include port for Railway
+    'database': os.getenv('DB_NAME'),
     'raise_on_warnings': True
 }
+
 SQL_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "c.sql")
 # --- Database Setup ---
 def setup_database():
