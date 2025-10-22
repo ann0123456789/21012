@@ -4,6 +4,11 @@ import mysql.connector
 import os
 import time
 import traceback
+import threading
+
+# Run-once guards for DB init
+_db_inited = False
+_db_init_lock = threading.Lock()
 
 app = Flask(__name__)
 app.secret_key = "super_secret_key_change_me"  # Needed for session management
@@ -103,12 +108,20 @@ def close_db(exc):
         db.close()
 
 
-@app.before_first_request
+@app.before_request
 def _init_db_once():
-    try:
-        setup_database()
-    except Exception:
-        print("DB init error:\n", traceback.format_exc())
+    global _db_inited
+    if not _db_inited:
+        with _db_init_lock:
+            if not _db_inited:
+                try:
+                    setup_database()
+                    _db_inited = True
+                    print("✅ DB initialized (run-once before_request)")
+                except Exception:
+                    print("DB init error:\n", traceback.format_exc())
+    # return None implicitly (continue request)
+
 
 
 class PrerequisiteManager:
@@ -348,6 +361,7 @@ def classroom_lessons():
 @app.route("/fetch_instructor_details", methods=["GET"])
 
 
+@app.route("/fetch_instructor_details", methods=["GET"])
 @app.route("/fetch_course_details", methods=["GET"])
 def fetch_course_details():
     ins_id = session.get("user_id")  # Instructor ID from session
@@ -1556,33 +1570,21 @@ def update_lesson_prerequisite(lesson_id):
         return jsonify({"ok": False, "error": str(e)}), 500
 
 @app.route("/api/lessons/status/<int:student_id>/<int:lesson_id>", methods=["GET"])
-def get_lesson_status(lesson_id):
-    """Get lesson status for a specific student"""
-    student_id = session.get('user_id') 
-    if not student_id: return jsonify({"ok": False, "error": "Student not logged in"}), 401
-    status = PrerequisiteManager.get_prerequisite_status(student_id, lesson_id) 
-    completed = PrerequisiteManager.check_lesson_completion(student_id, lesson_id) 
-    
-    return jsonify({
-        "ok": True,
-        "lesson_id": lesson_id,
-        "locked": status["locked"],
-        "completed": completed,
-        "prerequisite_lesson": status["prerequisite_lesson"]
-    })
+def get_lesson_status(student_id, lesson_id):  # add student_id
+    # if you actually want session instead, drop <int:student_id> from the route
+    status = PrerequisiteManager.get_prerequisite_status(student_id, lesson_id)
+    completed = PrerequisiteManager.check_lesson_completion(student_id, lesson_id)
+    return jsonify({"ok": True, "lesson_id": lesson_id,
+                    "locked": status["locked"], "completed": completed,
+                    "prerequisite_lesson": status["prerequisite_lesson"]})
+
 
 @app.route("/api/courses/<unit_id>/lessons/status/<int:student_id>", methods=["GET"])
-def get_course_lessons_status(unit_id):
-    """Get all lessons for a course with their status for a specific student"""
-    student_id = session.get('user_id') 
-    if not student_id: return jsonify({"ok": False, "error": "Student not logged in"}), 401
-    lessons = PrerequisiteManager.get_lessons_with_status(student_id, unit_id) 
-    return jsonify({
-        "ok": True,
-        "unit_id": unit_id,
-        "student_id": student_id,
-        "lessons": lessons
-    })
+def get_course_lessons_status(unit_id, student_id):  # add student_id
+    lessons = PrerequisiteManager.get_lessons_with_status(student_id, unit_id)
+    return jsonify({"ok": True, "unit_id": unit_id,
+                    "student_id": student_id, "lessons": lessons})
+
 
 @app.route("/api/lessons/<int:lesson_id>/completion-stats", methods=["GET"])
 def get_lesson_completion_stats(lesson_id):
