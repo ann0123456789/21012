@@ -1879,34 +1879,43 @@ def set_active():
 def admin():
     return render_template("admin_management.html")
 
-@app.route("/logins", methods = ["POST"])
+@app.route("/logins", methods=["POST"])
 def logins():
     db = get_db()
-    cursor = db.cursor(dictionary=True)
-    email = request.form.get("email")
-    password = request.form.get("password")
+    cur = db.cursor(dictionary=True)
+
+    data = request.get_json(silent=True) or {}
+    email = request.form.get("email") or data.get("email")
+    password = request.form.get("password") or data.get("password")
+
+    if not email or not password:
+        return jsonify({"status":"error","message":"Email and password are required."}), 400
 
     try:
-        cursor.execute("SELECT user_ref_id,user_type, theme_preference,activity_status, font_preference FROM Logins WHERE email = %s AND password_hash = %s",(email,password,))
-        user_ref = cursor.fetchone()
+        cur.execute("""
+          SELECT user_ref_id,user_type,theme_preference,activity_status,font_preference
+          FROM Logins WHERE email=%s AND password_hash=%s
+        """, (email, password))
+        row = cur.fetchone()
+        if not row:
+            return jsonify({"status":"error","message":"Invalid email or password"}), 401
 
-        if not user_ref:
-            return jsonify({"status": "error", "message": "Invalid email or password"}), 401
-        session['user_id'] = user_ref['user_ref_id']
-        session['user_type'] = user_ref['user_type']
+        session['user_id'] = row['user_ref_id']
+        session['user_type'] = row['user_type']
         session.permanent = True
         session.modified = True
-        if user_ref["user_type"] == "admin":
-           return jsonify({"status": "success", "redirect": "/admin","theme": user_ref["theme_preference"], "activity": user_ref["activity_status"], "font": user_ref["font_preference"]})
-        elif user_ref["user_type"] == "instructor":
-            return jsonify({"status": "success", "redirect": "/instructor_course_management", "theme": user_ref["theme_preference"], "activity": user_ref["activity_status"], "font": user_ref["font_preference"]})
-        elif user_ref["user_type"] == "student":
-            return jsonify({"status": "success", "redirect": "/student_course_management","theme": user_ref["theme_preference"], "activity": user_ref["activity_status"], "font": user_ref["font_preference"]})
-        else:
-            return jsonify({"status": "error", "message": "Unkn own user type"}), 400    
 
+        redirect = ("/admin" if row["user_type"]=="admin"
+                    else "/instructor_course_management" if row["user_type"]=="instructor"
+                    else "/student_course_management")
+        return jsonify({"status":"success","redirect":redirect,
+                        "theme":row["theme_preference"],
+                        "activity":row["activity_status"],
+                        "font":row["font_preference"]})
     except mysql.connector.Error as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+        print("LOGIN DB ERROR:", e.errno, e.msg)
+        return jsonify({"status":"error","message":"Database error"}), 500
+
     
 @app.route("/theme_change", methods = ["POST"])
 def theme_change():

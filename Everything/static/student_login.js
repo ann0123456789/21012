@@ -5,7 +5,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   const password = document.getElementById("password").value.trim();
 
   try {
-    const response = await fetch("http://127.0.0.1:5000/logins", {
+    const response = await fetch("/logins", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ email, password }),
