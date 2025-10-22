@@ -28,36 +28,40 @@ def setup_database():
     """Recreate and seed the MySQL database from c.sql automatically (only if empty)."""
     try:
         print("🔍 Checking MySQL connection...")
+
+        # ✅ Always include port for managed DBs (Railway/Render)
         conn = mysql.connector.connect(
             user=DB_CONFIG['user'],
             password=DB_CONFIG['password'],
-            host=DB_CONFIG['host']
+            host=DB_CONFIG['host'],
+            port=DB_CONFIG['port'],
         )
         cur = conn.cursor()
-        cur.execute(f"CREATE DATABASE IF NOT EXISTS {DB_CONFIG['database']}")
-        cur.close()
-        conn.close()
+
+        try:
+            # Some managed MySQL users can’t create databases; catch and continue
+            cur.execute(f"CREATE DATABASE IF NOT EXISTS {DB_CONFIG['database']}")
+        except mysql.connector.Error as e:
+            if e.errno in (1044, 1045):  # Access denied / insufficient privileges
+                print(f"⚠️ No privilege to CREATE DATABASE; proceeding with existing '{DB_CONFIG['database']}'.")
+            else:
+                raise
+        finally:
+            cur.close()
+            conn.close()
         print(f"✅ Database '{DB_CONFIG['database']}' is ready.")
 
-        # Connect to the database to check existing tables
+        # ✅ Second connect already uses **DB_CONFIG** (includes port & database)
         conn = mysql.connector.connect(**DB_CONFIG)
         cur = conn.cursor()
         cur.execute("SHOW TABLES;")
         tables = cur.fetchall()
 
-        # if tables:
-        #     print("✅ Tables already exist — skipping rebuild.\n")
-        #     cur.close()
-        #     conn.close()
-        #     return
-
-        print("⚙️  Rebuilding schema from c.sql...")
+        print("⚙️  Rebuilding schema from c.sql.")
         with open(SQL_FILE, "r", encoding="utf-8") as f:
             sql_script = f.read()
 
-        # Disable foreign key checks to allow drops
         cur.execute("SET FOREIGN_KEY_CHECKS=0;")
-
         for raw_stmt in sql_script.split(";"):
             stmt = raw_stmt.strip()
             if not stmt:
@@ -65,7 +69,7 @@ def setup_database():
             try:
                 cur.execute(stmt)
             except mysql.connector.Error as e:
-                if e.errno in (1051, 1091):  # harmless drop errors
+                if e.errno in (1051, 1091):
                     print(f"⚠️  Ignored benign drop error {e.errno}: {e.msg}")
                     continue
                 else:
@@ -76,23 +80,36 @@ def setup_database():
         conn.commit()
         cur.close()
         conn.close()
-
         print("✅ Database schema and dummy data successfully reloaded from c.sql.\n")
 
     except mysql.connector.Error as e:
         print(f"❌ MySQL setup failed ({e.errno}): {e.msg}")
 
+
 def get_db():
     if "db" not in g:
         g.db = mysql.connector.connect(**DB_CONFIG)
+    else:
+        try:
+            g.db.ping(reconnect=True, attempts=1, delay=0)
+        except Exception:
+            g.db = mysql.connector.connect(**DB_CONFIG)
     return g.db
 
-
 @app.teardown_appcontext
-def close_db(exception=None):
+def close_db(exc):
     db = g.pop("db", None)
     if db is not None:
         db.close()
+
+
+@app.before_first_request
+def _init_db_once():
+    try:
+        setup_database()
+    except Exception:
+        print("DB init error:\n", traceback.format_exc())
+
 
 class PrerequisiteManager:
     """Reusable module for managing prerequisites"""
