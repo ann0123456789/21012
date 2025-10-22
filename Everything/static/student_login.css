@@ -1,0 +1,89 @@
+body {
+  font-family: "Archivo Black", sans-serif;
+  padding: 20px;
+  background-image: var(--background-image-generic); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  text-align: center;
+  color: #1a3b38;
+}
+
+/* Welcome heading outside the box */
+#mainHeading {
+  font-size: 100px;
+  margin-bottom: 50px;
+  color: rgb(45, 87, 83);
+  text-align: center;
+}
+
+/* Login container box */
+.login-container {
+  display: inline-block;
+  background-color: rgba(193, 245, 239, 0.9); /* slightly transparent */
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+  width: 400px;
+}
+
+/* Input fields */
+input[type="email"],
+input[type="password"] {
+  width: 90%;
+  padding: 15px;
+  margin: 15px 0;
+  border: 2px solid #367972;
+  border-radius: 10px;
+  font-size: 18px;
+  font-family: "Archivo Black", sans-serif;
+}
+
+/* Login button */
+button {
+  width: 90%;
+  padding: 15px;
+  margin-top: 25px;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #93e8df;
+  background-color: rgb(45, 87, 83);
+  border: 2px solid #316560;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #84d4cb;
+  color: rgb(44, 73, 70);
+  transform: translateY(-3px);
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: #1a3b38;
+  box-shadow: 0 0 5px #1a3b38;
+}
+
+
+/* Sign up link styling */
+#signupLink {
+  margin: 15px 0;
+}
+
+#signupLink a {
+  color: #367972;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#signupLink a:hover {
+  color: #1a3b38;
+  text-decoration: underline;
+}

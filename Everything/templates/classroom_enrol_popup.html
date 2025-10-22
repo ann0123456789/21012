@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Enroll in Classroom</title>
+    <link rel="stylesheet"href="{{ url_for('static', filename='enrol_style.css') }}"/>
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+  </head>
+  <body>
+    <div class="searchwrapper">
+      <label for="search">Search Classrooms:</label>
+      <input type="search" id="search" placeholder="Classroom Name / ID" />
+    </div>
+
+    <div class="course-cards" data-classroom-cards-container></div>
+    <template data-card-template>
+      <div class="cardwrapper" data-card>
+        <div class="card">
+          <div class="header" data-header>Classroom Name</div>
+          <div class="body" data-body>Classroom ID</div>
+          <button class="enrollbtn" data-enroll-btn>Enroll</button>
+        </div>
+      </div>
+    </template>
+
+    <script src="{{ url_for('static', filename='classroom_enrol_popup.js') }}"></script>
+    <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+    <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+  </body>
+</html>

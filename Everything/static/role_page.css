@@ -1,0 +1,73 @@
+:root {
+  /* Font */
+  --font-primary: "Archivo Black", sans-serif;
+
+  /* Colors */
+  --primary-dark: #1a3b38;
+  --primary-dark-accent: #367972;
+  --primary-light: #c1f5ef;
+  --primary-light-hover: #a3e6de;
+
+  /* Effects */
+  --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  /* Sizing */
+  --heading-size: 100px;
+  --subheading-size: 35px;
+  --button-width: 200px;
+  --button-height: 60px;
+  --button-font-size: 18px;
+}
+
+body {
+  font-family: var(--font-primary);
+  padding: 20px;
+
+  background-image: var(--background-image-generic);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  text-align: center;
+  color: var(--primary-dark);
+}
+
+#mainHeading {
+  font-size: var(--heading-size);
+  margin-bottom: 30px;
+  text-align: center;
+  color: var(--primary-dark);
+}
+
+#rolePrompt {
+  font-size: var(--subheading-size);
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+#roleContainer {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.roleBtn {
+  width: var(--button-width);
+  height: var(--button-height);
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
+  background-color: var(--primary-light);
+  border: 2px solid var(--primary-dark-accent);
+  color: var(--primary-dark-accent);
+  font-size: var(--button-font-size);
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.roleBtn:hover {
+  background-color: var(--primary-light-hover);
+  transform: translateY(-3px);
+}

@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="/static/course_page_instructor.css" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+      <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+    <style>
+      .lesson-card, .lesson-list-item {
+        position: relative;
+      }
+      /* Show delete button on hover */
+      .lesson-card:hover .delete-lesson-btn,
+      .lesson-list-item:hover .delete-lesson-btn {
+        opacity: 1;
+      }
+
+      .delete-lesson-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 0.3s ease, background-color 0.3s ease;
+      }
+
+      .delete-lesson-btn:hover {
+        background: #cc0000;
+      }
+    </style>
+  </head>
+  <body class="instructor-theme">
+    <!-- Sidebar Dashboard -->
+    <div class="sidebar">
+      <div class="logo"><h2>EduBridge</h2></div>
+      <ul class="dashboard-menu">
+        <li><a href="/instructor_course_management" class="active"><i class="fas fa-book"></i> Course</a></li>
+        <li><a href="/sidebar_classroom_ins"><i class="fas fa-chalkboard"></i> Classroom</a></li>
+        <li><a href="/render_ins_report_student_list"><i class="fas fa-user-graduate"></i> Student</a></li>
+        <li><a href="/render_ins_report_navigation"><i class="fas fa-chart-bar"></i> Report</a></li>
+        <li><a href="/"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+        <li>
+          <button id = "theme-switch">
+            <span class="material-symbols-outlined light-icon">light_mode</span>
+            <span class="material-symbols-outlined dark-icon">dark_mode</span>
+          </button>
+        </li>
+        <li>
+          <button id = "size-switch">
+            <span class = "small-button">S</span>
+            <span class = "medium-button">M</span>
+            <span class = "large-button">L</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="main-content">
+      <header>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+          <div>
+            <h1 id="courseTitle"></h1>
+            <p>Unit ID: <span id="unitId"></span></p>
+          </div>
+
+          <!-- Inline editor for Course Name + Unit ID -->
+          <div id="inlineEditBar" style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+            <button id="editInlineBtn"
+              style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fafafa;cursor:pointer;">
+              <i class="fas fa-pen-to-square"></i> Edit Title & Unit
+            </button>
+
+            <div id="inlineEditor" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;background:#fafafa;border:1px solid #e5e7eb;border-radius:10px;padding:10px;">
+              <label style="display:flex;flex-direction:column;font-weight:600;">
+                Course Name
+                <input id="ie_title" style="padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-width:260px;" />
+              </label>
+              <label style="display:flex;flex-direction:column;font-weight:600;">
+                Unit ID
+                <input id="ie_unit" style="padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-width:160px;" />
+              </label>
+              <button id="ie_save" style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#e8f3ff;cursor:pointer;">Save</button>
+              <button id="ie_cancel" style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;">Cancel</button>
+              <span id="ie_msg" style="margin-left:6px;font-size:13px;"></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Course Info -->
+      <section class="course-info">
+        <h2>Course Information</h2>
+        <ul>
+          <li>Course Director: <span id="courseDirector"></span></li>
+          <li>Status: <span id="courseStatus" class="status"></span></li>
+          <li>Active Classrooms: <span id="activeClassrooms"></span></li>
+          <li>Total Credit: <span id="totalCredit"></span></li>
+        </ul>
+
+        <!-- Inline editor for Director / Status / Total Credit (Active Classrooms is read-only) -->
+        <div id="infoEditBar" style="margin-top:10px;">
+          <button id="editInfoBtn" class="btn" style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fafafa;cursor:pointer;">
+            <i class="fas fa-pen-to-square"></i> Edit Course Info
+          </button>
+
+          <div id="infoEditor" style="display:none;gap:10px;align-items:center;flex-wrap:wrap;background:#fafafa;border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin-top:8px;">
+            <label style="display:flex;flex-direction:column;font-weight:600;">
+              Course Director
+              <input id="ci_director" style="padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-width:260px;">
+            </label>
+            <label style="display:flex;flex-direction:column;font-weight:600;">
+              Status
+              <select id="ci_activity" style="padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-width:140px;">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </label>
+            <label style="display:flex;flex-direction:column;font-weight:600;">
+              Total Credit
+              <input id="ci_credit" type="number" min="0" style="padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-width:120px;">
+            </label>
+            <label style="display:flex;flex-direction:column;font-weight:600;">
+              Active Classrooms
+              <input id="ci_active_classrooms_count" type="number" min="0" style="padding:6px 8px;border:1px solid #e5e7eb;border-radius:8px;min-width:120px;">
+            </label>
+            <button id="ci_save" class="btn" style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#e8f3ff;cursor:pointer;">Save</button>
+            <button id="ci_cancel" class="btn" style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;cursor:pointer;">Cancel</button>
+            <span id="ci_msg" style="margin-left:6px;font-size:13px;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Students -->
+      <section class="students">
+        <h2>Enrolled Students</h2>
+        <div class="students-tile">
+          <ul class="student-list" id="studentList"></ul>
+        </div>
+      </section>
+
+      <!-- Lessons -->
+      <section class="lessons">
+        <div class="view-toggle">
+          <button id="viewToggle" class="toggle-btn">
+            <i class="fas fa-list"></i> List View
+          </button>
+        </div>
+
+        <!-- Grid View -->
+        <div id="cardView" class="lessons-grid"></div>
+
+        <!-- List View -->
+        <div id="listView" class="lessons-list">
+          <ul id="lessonListContainer"></ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Templates -->
+    <template id="lessonCardTemplate">
+      <div class="lesson-card">
+        <div class="lesson-header" data-lesson-header></div>
+        <div class="lesson-body" data-lesson-body></div>
+        <p>Credit: <span data-lesson-credit></span></p>
+        <button class="delete-lesson-btn" title="Delete Lesson"><i class="fas fa-trash"></i></button>
+      </div>
+    </template>
+
+    <template id="lessonListTemplate">
+      <li class="lesson-list-item">
+        <span class="lesson-header" data-lesson-header></span>
+        <span class="lesson-body" data-lesson-body></span>
+        <span>Credit: <span data-lesson-credit></span></span>
+        <button class="delete-lesson-btn" title="Delete Lesson"><i class="fas fa-trash"></i></button>
+      </li>
+    </template>
+
+    <!-- Add Lesson Tile Template -->
+    <template id="addLessonCardTemplate">
+      <div class="lesson-card add-lesson">
+        <div class="lesson-header">+ Add New Lesson</div>
+      </div>
+    </template>
+
+    <template id="addLessonListTemplate">
+      <li class="lesson-list-item add-lesson">
+        <div class="lesson-header">+ Add New Lesson</div>
+      </li>
+    </template>
+
+    <!-- your existing data loader (kept as-is) -->
+    <script src="/static/course_page_instructor.js"></script>
+
+    <!-- Inline editors (title/unit + info) -->
+    <script>
+      (function(){
+        const $ = id => document.getElementById(id);
+        const txt = id => ($(id)?.textContent || "").trim();
+        const set = (id, v) => { const el=$(id); if (el) el.textContent = v; };
+
+        /* ---------- Title & Unit editor ---------- */
+        const editBtn = $("editInlineBtn");
+        const editor = $("inlineEditor");
+        const titleI = $("ie_title");
+        const unitI  = $("ie_unit");
+        const save   = $("ie_save");
+        const cancel = $("ie_cancel");
+        const msg    = $("ie_msg");
+
+        function getCourseId(){
+          const p = new URLSearchParams(location.search);
+          return p.get("course_id") || p.get("id") || p.get("courseId") || "";
+        }
+
+        function openEditor(){
+          titleI.value = txt("courseTitle");
+          unitI.value  = txt("unitId");
+          msg.textContent = "";
+          editor.style.display = "flex";
+          editBtn.style.display = "none";
+        }
+        function closeEditor(){
+          editor.style.display = "none";
+          editBtn.style.display = "inline-flex";
+        }
+        async function saveTitleUnit(){
+          msg.textContent = "Saving…";
+          const newTitle = titleI.value.trim();
+          const newUnit  = unitI.value.trim();
+          const oldUnit  = txt("unitId");
+
+          if (!newTitle) { msg.textContent = "Please enter a course name."; return; }
+          if (!newUnit)  { msg.textContent = "Please enter a unit ID."; return; }
+
+          // Always locate by current Unit ID
+          const payload = { unit_id: oldUnit, title: newTitle };
+          if (newUnit !== oldUnit) payload.unit_id_new = newUnit;
+
+          try {
+            const r = await fetch("/courses/update", {
+              method: "POST",
+              headers: { "Content-Type":"application/json" },
+              body: JSON.stringify(payload)
+            });
+            if (!r.ok) throw new Error(await r.text());
+            const res = await r.json();
+            if (res.ok === false) throw new Error(res.error || "Update failed.");
+
+            const c = res.course || {};
+            set("courseTitle", c.Title ?? newTitle);
+            set("unitId",      c.Unit_id ?? newUnit);
+
+            // If your URL has ?unit_id=..., keep it in sync
+            const url = new URL(location.href);
+            url.searchParams.set("unit_id", (c.Unit_id ?? newUnit));
+            history.replaceState({}, "", url.toString());
+
+            msg.textContent = "Saved ✓";
+            setTimeout(closeEditor, 250);
+          } catch (e) {
+            console.error(e);
+            msg.textContent = "Failed: " + e.message;
+          }
+        }
+        if (editBtn){
+          editBtn.addEventListener("click", openEditor);
+          cancel.addEventListener("click", (e)=>{ e.preventDefault(); closeEditor(); });
+          save.addEventListener("click",   (e)=>{ e.preventDefault(); saveTitleUnit(); });
+        }
+
+        /* ---------- Course Info editor (Director / Status / Credit) ---------- */
+        const editInfoBtn = $("editInfoBtn");
+        const infoEditor  = $("infoEditor");
+        const infoMsg     = $("ci_msg");
+        const f = {
+          director: $("ci_director"),
+          activity: $("ci_activity"),
+          credit:   $("ci_credit"),
+          activeCls:$("ci_active_classrooms_count"),
+        };
+
+        function openInfo(){
+          f.director.value = txt("courseDirector");
+          const st = (txt("courseStatus") || "").toLowerCase();
+          f.activity.value = (st === "inactive") ? "inactive" : "active";
+          f.credit.value   = txt("totalCredit") || "0";
+          f.activeCls.value= txt("activeClassrooms") || "0";
+          infoMsg.textContent = "";
+          infoEditor.style.display = "flex";
+          editInfoBtn.style.display = "none";
+        }
+        function closeInfo(){
+          infoEditor.style.display = "none";
+          editInfoBtn.style.display = "inline-flex";
+        }
+
+        async function saveInfo(){
+          infoMsg.textContent = "Saving…";
+          const payload = {
+            course_director: f.director.value.trim(),
+            activity: f.activity.value,          // 'active' | 'inactive'
+            total_credit: f.credit.value ? Number(f.credit.value) : null,
+            active_classrooms_count: f.activeCls.value ? Number(f.activeCls.value) : 0
+          };
+          const cid = getCourseId();
+          if (cid) payload.course_id = Number(cid); else payload.unit_id = txt("unitId");
+
+          try {
+            const r = await fetch("/courses/update", {
+              method: "POST",
+              headers: { "Content-Type":"application/json" },
+              body: JSON.stringify(payload)
+            });
+            if (!r.ok) throw new Error(await r.text());
+            const res = await r.json();
+            if (res.ok === false) throw new Error(res.error || "Update failed.");
+
+            const c = res.course || {};
+            const act = (c.Activity ?? f.activity.value);
+            set("courseDirector", c.Course_director ?? f.director.value);
+            set("courseStatus",   act.charAt(0).toUpperCase() + act.slice(1));
+            set("activeClassrooms", c.Active_Classrooms_Count ?? f.activeCls.value);
+            set("totalCredit",    c.Total_credit ?? f.credit.value);
+
+            // optional: toggle status classes if you style them
+            const sEl = document.getElementById("courseStatus");
+            if (sEl) {
+              const isActive = (act === "active");
+              sEl.classList.toggle("active", isActive);
+              sEl.classList.toggle("inactive", !isActive);
+            }
+
+            infoMsg.textContent = "Saved ✓";
+            setTimeout(closeInfo, 250);
+          } catch (e) {
+            console.error(e);
+            infoMsg.textContent = "Failed: " + e.message;
+          }
+        }
+
+        if (editInfoBtn){
+          editInfoBtn.addEventListener("click", openInfo);
+          document.getElementById("ci_cancel").addEventListener("click", (e)=>{ e.preventDefault(); closeInfo(); });
+          document.getElementById("ci_save").addEventListener("click",   (e)=>{ e.preventDefault(); saveInfo(); });
+        }
+      })();
+    </script>
+  
+    <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+  </body>
+</html>

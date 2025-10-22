@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Classroom Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <link rel="stylesheet" href="/static/classroom_instructor.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  </head>
+  <body class="instructor-theme">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo"><h2>EduBridge</h2></div>
+      <ul class="dashboard-menu">
+        <li><a href="/instructor_course_management"><i class="fas fa-book"></i> Course</a></li>
+        <li><a href="/sidebar_classroom_ins" class="active"><i class="fas fa-chalkboard"></i> Classroom</a></li>
+        <li><a href="/render_ins_report_student_list"><i class="fas fa-user-graduate"></i> Student</a></li>
+        <li><a href="/render_ins_report_navigation"><i class="fas fa-chart-bar"></i> Report</a></li>
+        <li><a href="/"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+        <li>
+          <button id = "theme-switch">
+            <span class="material-symbols-outlined light-icon">light_mode</span>
+            <span class="material-symbols-outlined dark-icon">dark_mode</span>
+          </button>
+        </li>
+        <li>
+          <button id = "size-switch">
+            <span class = "small-button">S</span>
+            <span class = "medium-button">M</span>
+            <span class = "large-button">L</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header style="display:flex;align-items:center;justify-content:space-between;">
+        <h1>Classrooms</h1>
+        <div class="view-toggle">
+          <button id="viewToggle" class="toggle-btn">
+            <i class="fas fa-list"></i> List View
+          </button>
+        </div>
+      </header>
+
+      <!-- Classroom Card/List Section -->
+      <section class="classrooms-section">
+        <!-- Grid View -->
+        <div id="cardView" class="classrooms-grid">
+          <div class="add-classroom" id="addClassroomCard">
+            <div class="add-icon">+</div>
+            <div class="add-text">Add Classroom</div>
+          </div>
+          <div class="ins-classroom-cards" data-ins-classroom-cards-container></div>
+        </div>
+
+        <!-- List View -->
+        <div id="listView" class="classrooms-list" style="display:none;">
+          <div class="add-classroom-list" id="addClassroomList">
+            <div class="list-add-icon">+</div>
+            <div class="list-add-text">Add Classroom</div>
+          </div>
+          <ul class="ins-classroom-lists" data-ins-classroom-list-container></ul>
+        </div>
+      </section>
+
+      <!-- Templates -->
+      <template data-ins-classroom-card-template>
+        <div class="ins-card" data-ins-classroom-card>
+          <div class="ins-header" data-ins-header>Classroom Name</div>
+          <div class="ins-body" data-ins-body>Classroom ID</div>
+          <button class="deleteBtn" data-deleteBtn>Delete</button>
+        </div>
+      </template>
+
+      <template data-classroom-list-item-template>
+        <li class="classroom-list-item">
+          <div class="ins-header" data-ins-header></div>
+          <div class="ins-body" data-ins-body></div>
+          <button class="deleteBtn" data-deleteBtn>Delete</button>
+        </li>
+      </template>
+    </div>
+
+    <script src="/static/classroom_instructor.js"></script>
+    <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+    <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+  </body>
+</html>

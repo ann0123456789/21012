@@ -1,0 +1,312 @@
+/* ====================== Global Reset ====================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-primary);
+}
+
+body {
+  background-image: var(--background-image-student);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-color-dark);
+  display: flex;
+}
+
+/* ====================== Sidebar Dashboard ====================== */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--gradient-sidebar);
+    color: var(--text-color-on-dark-bg);
+    height: 100vh;
+    position: fixed;
+    padding: var(--padding-medium) 0;
+    box-shadow: var(--shawdow-side-bar);
+    overflow-y: auto;
+}
+
+.logo {
+    text-align: center;
+    padding: var(--padding-medium) 0;
+    border-bottom: var(--border-width-alt) solid var(--border-color);
+    margin-bottom: var(--padding-medium);
+}
+
+.logo h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-light-accent);
+}
+
+.dashboard-menu {
+    list-style: none;
+    padding: 0 var(--padding-medium);
+}
+
+.dashboard-menu li {
+    margin-bottom: var(--padding-small);
+}
+
+.dashboard-menu a {
+    display: flex;
+    align-items: center;
+    padding: var(--padding-medium);
+    color: var(--text-color-light);
+    text-decoration: none;
+    border-radius: var(--border-radius-medium);
+    transition: all 0.3s ease;
+}
+
+.dashboard-menu a:hover,
+.dashboard-menu a.active {
+    background: var(--hover-overlay);
+}
+
+.dashboard-menu i {
+    margin-right: var(--padding-small);
+    font-size: var(--font-size-md);
+    width: 25px;
+    text-align: center;
+}
+
+
+/* ====================== Main Content ====================== */
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: var(--padding-xlarge);
+}
+
+.classroom-header-bar h1 {
+  font-size: var(--font-size-xxxl);
+  color: var(--primary-dark);
+  margin-bottom: var(--padding-large);
+}
+
+.classroom-info {
+  background: var(--gradient-card);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--padding-xlarge);
+  margin-bottom: var(--padding-xlarge);
+}
+
+/* ====================== Form Rows ====================== */
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--padding-medium);
+}
+
+.form-row label {
+  flex: 0 0 200px;
+  font-weight: bold;
+  color: var(--primary-dark);
+  margin-right: var(--padding-medium);
+}
+
+.textbox {
+  flex: 1;
+  padding: var(--padding-small);
+  border: var(--border-width-alt) solid var(--border-color);
+  border-radius: var(--border-radius-small);
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  font-family: var(--font-primary);
+  background-color: var(--primary-light-accent);
+  box-shadow: var(--shadow-main);
+}
+
+textarea.textbox {
+  resize: vertical;
+}
+
+.readonly-box {
+  flex: 1;
+  padding: var(--padding-small);
+  background-color: #f4fdfc;
+  border: var(--border-width-alt) solid var(--border-color);
+  border-radius: var(--border-radius-small);
+  font-size: var(--font-size-md);
+  font-family: var(--font-primary);
+  color: var(--primary-dark);
+  min-height: var(--min-height-card);
+  box-shadow: inset 0px 2px 4px rgba(0,0,0,0.1);
+  overflow-y: auto;
+}
+
+/* ====================== Buttons ====================== */
+.btn {
+  padding: var(--padding-small) var(--padding-medium);
+  border: var(--border-width-alt) solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  background: var(--primary-light);
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  color: var(--border-color);
+  margin-right: var(--padding-small);
+  box-shadow: var(--shadow-main);
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: var(--primary-light-hover);
+}
+
+/* ====================== Lessons Section ====================== */
+.lessons h2 {
+  margin-bottom: var(--padding-medium);
+  color: var(--primary-dark);
+}
+
+.view-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--padding-large);
+}
+
+.toggle-btn {
+  padding: var(--padding-medium) var(--padding-xlarge);
+  background-color: var(--card-background);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  color: var(--border-color);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--padding-small);
+  box-shadow: var(--shadow-main);
+}
+
+.toggle-btn:hover {
+  background-color: var(--card-background-hover);
+}
+
+/* ====================== Lessons Grid ====================== */
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--padding-large);
+}
+
+.lesson-card {
+  background: var(--gradient-card);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--padding-large);
+  box-shadow: var(--shadow-main);
+  transition: all 0.3s ease;
+  text-align: left;
+  position: relative;
+  min-height: var(--min-height-card);
+}
+
+.lesson-card:hover {
+  background: var(--gradient-card-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.lesson-header {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  margin-bottom: var(--padding-small);
+  color: var(--primary-dark);
+}
+
+.lesson-body {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--padding-small);
+  color: var(--border-color);
+}
+
+/* Status badges */
+.lesson-status-badge {
+  position: absolute;
+  bottom: var(--padding-small);
+  right: var(--padding-small);
+  padding: var(--padding-small) var(--padding-medium);
+  border-radius: var(--border-radius-medium);
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.lesson-status-badge.completed { background-color: var(--status-completed); }
+.lesson-status-badge.available { background-color: var(--status-available); }
+.lesson-status-badge.locked    { background-color: var(--status-locked); }
+
+/* ====================== Lessons List ====================== */
+.lessons-list { display: none; }
+
+.lesson-list-item {
+  background: var(--gradient-card);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--padding-medium);
+  margin-bottom: var(--padding-medium);
+  box-shadow: var(--shadow-main);
+  transition: all 0.3s ease;
+  color: var(--primary-dark);
+  position: relative;
+}
+
+.lesson-list-item:hover {
+  background: var(--gradient-card-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ====================== Add Lesson Card ====================== */
+.add-lesson {
+  background: var(--gradient-add-card);
+  border: var(--border-width-main) dashed var(--action-add-border);
+  color: var(--action-add-text);
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  min-height: var(--min-height-add-card);
+}
+
+.add-lesson:hover {
+  background: var(--gradient-add-card-hover);
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.15);
+}
+
+/* ====================== Lessons Header ====================== */
+.lessons-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--padding-large);
+}
+
+.lessons-header h2 {
+  font-size: var(--font-size-xl);
+  color: var(--primary-dark);
+}
+
+/* ====================== Responsive ====================== */
+@media (max-width: 900px) {
+  .sidebar { width: var(--sidebar-width-medium); }
+  .main-content {
+    margin-left: var(--sidebar-width-medium);
+    padding: var(--padding-large) var(--padding-medium);
+  }
+}
+
+@media (max-width: 768px) {
+  body { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: relative; }
+  .main-content { margin-left: 0; }
+  h1 { font-size: var(--font-size-xxl); }
+}

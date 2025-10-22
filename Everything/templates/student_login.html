@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - LMS</title>
+  <link rel="stylesheet" href="/static/student_login.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="/static/theme-switch.css" />
+  <link rel="stylesheet" href="/static/variables.css" />
+  <script src="/static/student_login.js" defer></script>
+</head>
+<body>
+  <h1 id="mainHeading">Welcome to LMS!</h1>
+
+  <div class="login-container">
+    <form id="loginForm" action="/logins" method="POST">
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+      <div id="signupLink">
+        <a href="/signup">Click Here to Sign Up!</a>
+      </div>
+
+      <button type="submit" id="loginBtn">Login</button>
+    </form>
+  </div>
+
+  <script src="/static/font-switch.js" defer></script>
+  <script src="/static/darkmode.js" defer></script>
+</body>
+</html>

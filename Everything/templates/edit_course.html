@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course - EduBridge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+    <link rel="stylesheet" href="/static/edit_course_style.css">
+</head>
+
+<body>
+    <div id="formWrapper">
+        <h1 id="pageHeading">Edit Course</h1>
+        <div class="spacer"></div>
+
+        <div id="formContainer">
+            <div class="formRow">
+                <label for="courseId">Course ID:</label>
+                <input type="text" id="courseId" readonly>
+            </div>
+            <div class="spacer1"></div>
+            <div class="formRow">
+                <label for="courseName">Course Name:</label>
+                <input type="text" id="courseName" placeholder="Enter course name">
+            </div>
+            <div class="spacer1"></div>
+            <div class="formRow">
+                <label for="courseDesc">Description:</label>
+                <input type="text" id="courseDesc" placeholder="Enter course description">
+            </div>
+            <div class="spacer1"></div>
+            <div id="buttonContainer">
+                <button id="saveBtn">Save</button>
+                <button id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/edit_course.js"></script>
+    <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+    <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+</body>
+
+</html>

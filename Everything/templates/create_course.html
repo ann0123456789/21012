@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Course - EduBridge</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/sidebar_classroom_instructor.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <link rel="stylesheet" href="/static/create_course.css" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+  </head>
+
+  <body class="instructor-theme">
+  <div class="sidebar">
+    <div class="logo"><h2>EduBridge</h2></div>
+    <ul class="dashboard-menu"> 
+      <li><a href="/instructor_course_management"><i class="fas fa-book"></i> Course</a></li>
+        <li><a href="/sidebar_classroom_ins" class="active"><i class="fas fa-chalkboard"></i> Classroom</a></li>
+        <li><a href="/render_ins_report_student_list"><i class="fas fa-user-graduate"></i> Student</a></li>
+        <li><a href="#"><i class="fas fa-chart-bar"></i> Report</a></li>
+        <li><a href="/"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+        <li>
+          <button id = "theme-switch">
+            <span class="material-symbols-outlined light-icon">light_mode</span>
+            <span class="material-symbols-outlined dark-icon">dark_mode</span>
+          </button>
+        </li>
+        <li>
+          <button id = "size-switch">
+            <span class = "small-button">S</span>
+            <span class = "medium-button">M</span>
+            <span class = "large-button">L</span>
+          </button>
+        </li>
+    </ul>
+  </div>
+    <div class="main-content">
+      <h1 id="pageHeading">Create New Course</h1>
+      <div class="spacer"></div>
+
+      <div id="formContainer">
+        <div class="formRow">
+          <label for="courseId">Course ID:</label>
+          <input type="text" id="courseId" placeholder="Enter course ID" />
+        </div>
+
+        <div class="spacer1"></div>
+        <div class="formRow">
+          <label for="courseName">Course Name:</label>
+          <input type="text" id="courseName" placeholder="Enter course name" />
+        </div>
+
+        <div class="spacer1"></div>
+        <div class="formRow">
+          <label for="courseDesc">Description:</label>
+          <input type="text" id="courseDesc" placeholder="Enter course description" />
+        </div>
+
+        <div class="spacer1"></div>
+        <div class="formRow">
+          <label for="courseDirector">Director:</label>
+          <input type="text" id="courseDirector" placeholder="Enter course director" />
+        </div>
+
+        <div class="spacer1"></div>
+        <div class="formRow">
+          <label for="courseCredits">Credits:</label>
+           <span id="courseCredits" class="readonlyField">30</span>
+        </div>
+        <div class="spacer1"></div>
+        <div class="formRow">
+          <label for="courseStatus">Status:</label>
+          <select id="courseStatus">
+            <option value="active" selected>Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+
+        <div class="spacer1"></div>
+        <div id="buttonContainer">
+          <button id="createBtn">Create</button>
+          <button id="cancelBtn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/create_course.js"></script>
+    <script type="text/javascript" src="/static/font-switch.js" defer></script>
+    <script type="text/javascript" src="/static/darkmode.js" defer></script>
+  </body>
+</html>

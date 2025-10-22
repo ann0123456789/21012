@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Detail</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="/static/course_page_student.css" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  </head>
+  <body>
+    <!-- Sidebar Dashboard -->
+    <div class="sidebar">
+      <div class="logo">
+        <h2>EduBridge</h2>
+      </div>
+
+      <ul class="dashboard-menu">
+        <li><a href="/student_course_management" class="active"><i class="fas fa-book"></i> Course</a></li>
+        <li><a href="/sidebar_classroom_std"><i class="fas fa-chalkboard"></i> Classroom</a></li>
+        <li><a href="/profile"><i class="fas fa-user-graduate"></i> Student</a></li>
+        <li><a href="/render_student_report_navigation"><i class="fas fa-chart-bar"></i> Report</a></li>
+        <li><a href="/"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+        <li>
+          <button id = "theme-switch">
+            <span class="material-symbols-outlined light-icon">light_mode</span>
+            <span class="material-symbols-outlined dark-icon">dark_mode</span>
+          </button>
+        </li>
+        <li>
+          <button id = "size-switch">
+            <span class = "small-button">S</span>
+            <span class = "medium-button">M</span>
+            <span class = "large-button">L</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header>
+        <h1 id="courseTitle">Course Title</h1>
+        <p>Unit ID: <span id="unitId"></span></p>
+          <p>Instructor: <span id = "instructorName"></span></p>
+      </header>
+
+      <!-- Course Info Section -->
+      <section class="course-info">
+        <h2>Course Information</h2>
+        <ul>
+          <li><strong>Course Director:</strong> <span id="courseDirector"></span></li>
+          <li><strong>Status:</strong> <span id="courseStatus" class="status"></span></li>
+          <li><strong>Total Credit:</strong> <span id="totalCredit"></span> </li>
+          <li><strong>Number of Active Classrooms:</strong> <span id="activeClassrooms"></span></li>
+        </ul>
+      </section>
+
+      <!-- Enrolled Students -->
+      <div class="students">
+        <h2>Enrolled Students</h2>
+        <div class="students-tile">
+          <ul class="student-list" id="studentList"></ul>
+        </div>
+      </div>
+
+
+      <!-- Lessons -->
+      <section class="lessons">
+        <h2>Lessons</h2>
+        <div class="view-toggle">
+          <button class="toggle-btn" id="viewToggle">
+            <i class="fas fa-list"></i> List View
+          </button>
+        </div>
+
+        <!-- Grid View -->
+        <div class="lessons-grid" id="cardView"></div>
+
+        <!-- List View -->
+        <div class="lessons-list" id="listView">
+          <ul id="lessonListContainer"></ul>
+        </div>
+
+        <!-- Lesson Card Template -->
+        <template id="lessonCardTemplate">
+          <div class="lesson-card">
+            <div data-lesson-header class="lesson-header"></div>
+            <div data-lesson-body class="lesson-body"></div>
+            <div>Credit: <span data-lesson-credit></span></div>
+            <div class="lesson-status-badge" data-lesson-status></div>
+          </div>
+        </template>
+
+        <!-- Lesson List Template -->
+        <template id="lessonListTemplate">
+          <div class="lesson-list-item">
+            <div>
+              <div data-lesson-header class="lesson-header"></div>
+              <div data-lesson-body class="lesson-body"></div>
+              <div>Credit: <span data-lesson-credit></span></div>
+            </div>
+            <div class="lesson-status-badge" data-lesson-status></div>
+          </div>
+        </template>
+      </section>
+    </div>
+
+    <script src="/static/course_page_student.js"></script>
+    <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+    <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+  </body>
+</html>

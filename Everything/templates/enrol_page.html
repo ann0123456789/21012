@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>EduBridge</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <h1 style="text-align: left">EduBridge</h1>
+  </head>
+  <body>
+    <button id="enrollBtn">Enroll/Unenroll unit</button>
+    <script>
+      const btn = document.getElementById("enrollBtn");
+
+      btn.onclick = () => {
+        window.open("enrol_popup", "Enrollment", "width=500,height=400");
+      };
+    </script>
+    <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+    <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>EduBridge</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='enrol_style.css') }}"
+    />
+    <link rel="stylesheet" href ="/static/variables.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href ="/static/theme-switch.css" />
+    <script
+      src="{{ url_for('static', filename='student_course_management.js') }}"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div class="searchwrapper">
+      <label for="search">Search Courses:</label>
+      <input type="search" id="search" placeholder="Course Code / Name" />
+    </div>
+    <!-- <button id="searchBtn">Search Now</button> -->
+
+    <div class="course-cards" data-course-cards-container></div>
+    <template data-card-template>
+      <div class="cardwrapper" data-card>
+        <div class="card">
+          <div class="header" data-header>Course Name</div>
+          <div class="body" data-body>Course Code</div>
+          <button class="enrollbtn" data-enrollbtn>Enroll</button>
+        </div>
+      </div>
+    </template>
+
+    <!-- <script src="enrol_script.js"></script> -->
+  </body>
+  <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+  <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+</html>

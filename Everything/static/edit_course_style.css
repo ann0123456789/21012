@@ -1,0 +1,90 @@
+body {
+    font-family: var(--font-primary);
+    padding: var(--padding-large);
+
+    background-image: url("background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--primary-dark);
+    text-align: center;
+}
+
+#formWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pageHeading {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--padding-small);
+}
+
+#headingLine {
+    width: 50%;
+    border: none;
+    border-top: var(--border-width-alt) solid var(--primary-dark);
+    margin-bottom: var(--padding-large);
+}
+
+#formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-large);
+    width: var(--form-width, 400px); /* fallback to 400px if variable not defined */
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+label {
+    font-size: var(--font-size-base);
+    font-weight: bold;
+}
+
+input {
+    width: var(--input-width, 250px); /* fallback 250px */
+    padding: var(--padding-small);
+    border: var(--border-width-alt) solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    box-sizing: border-box;
+    box-shadow: var(--shadow-main);
+}
+
+#buttonContainer {
+    display: flex;
+    gap: var(--padding-large);
+    margin-top: var(--padding-large);
+    justify-content: center;
+}
+
+button {
+    width: var(--button-width, 120px);
+    height: var(--button-height, 30px);
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    box-shadow: var(--shadow-main);
+    border-radius: var(--border-radius-small);
+    background-color: var(--primary-light);
+    border: var(--border-width-alt) solid var(--border-color);
+    color: var(--text-accent);
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.spacer {
+    height: var(--spacer-large, 80px); /* fallback 80px */
+}
+
+.spacer1 {
+    height: var(--spacer-small, 30px); /* fallback 30px */
+}

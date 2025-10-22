@@ -1,0 +1,515 @@
+/* ====================== Reset and Global ====================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-primary);
+}
+
+body {
+  background-image: var(--background-image-student);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-color-dark);
+  display: flex;
+}
+
+/* ====================== Sidebar Dashboard ====================== */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--gradient-sidebar);
+    color: var(--text-color-on-dark-bg);
+    height: 100vh;
+    position: fixed;
+    padding: var(--padding-medium) 0;
+    box-shadow: var(--shawdow-side-bar);
+    overflow-y: auto;
+}
+
+.logo {
+    text-align: center;
+    padding: var(--padding-medium) 0;
+    border-bottom: var(--border-width-alt) solid var(--border-color);
+    margin-bottom: var(--padding-medium);
+}
+
+.logo h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-light-accent);
+}
+
+.dashboard-menu {
+    list-style: none;
+    padding: 0 var(--padding-medium);
+}
+
+.dashboard-menu li {
+    margin-bottom: var(--padding-small);
+}
+
+.dashboard-menu a {
+    display: flex;
+    align-items: center;
+    padding: var(--padding-medium);
+    color: var(--text-color-light);
+    text-decoration: none;
+    border-radius: var(--border-radius-medium);
+    transition: all 0.3s ease;
+}
+
+.dashboard-menu a:hover,
+.dashboard-menu a.active {
+    background: var(--hover-overlay);
+}
+
+.dashboard-menu i {
+    margin-right: var(--padding-small);
+    font-size: var(--font-size-md);
+    width: 25px;
+    text-align: center;
+}
+
+/* ====================== Main Content ====================== */
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: var(--padding-xlarge);
+}
+
+header {
+  margin-bottom: var(--padding-xlarge);
+}
+
+.lesson-header-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--padding-medium);
+}
+
+.lesson-time-box {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-small);
+}
+
+.lesson-time-box label,
+.lesson-time-box .time-label {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  color: var(--text-color-dark);
+  white-space: nowrap;
+}
+
+.lesson-time-box input {
+  padding: var(--padding-xs) var(--padding-sm);
+  border: var(--border-width-alt) solid var(--border-color);
+  border-radius: var(--border-radius-small);
+  width: 60px;
+  background-color: var(--primary-light-accent);
+  font-weight: bold;
+  font-family: var(--font-primary);
+  box-shadow: var(--shadow-main);
+}
+
+h1 {
+  font-size: var(--font-size-xxxl);
+  color: var(--text-color-dark);
+  margin-bottom: var(--padding-small);
+}
+
+header p {
+  font-size: var(--font-size-md);
+  color: var(--text-accent);
+}
+
+/* ====================== Lesson Info ====================== */
+.lesson-info {
+  background: var(--gradient-card);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--padding-large);
+  margin-bottom: var(--padding-large);
+}
+
+.lesson-info h2 {
+  margin-bottom: var(--padding-medium);
+  color: var(--text-color-dark);
+}
+
+.lesson-info ul {
+  list-style: none;
+}
+
+.lesson-info label {
+  display: block;
+  margin-top: var(--padding-medium);
+  margin-bottom: var(--padding-small);
+  font-weight: bold;
+  color: var(--text-color-dark);
+}
+
+.textbox {
+  width: 100%;
+  padding: var(--padding-small);
+  border: var(--border-width-alt) solid var(--border-color);
+  border-radius: var(--border-radius-small);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  font-family: var(--font-primary);
+  background-color: var(--primary-light-accent);
+  box-shadow: var(--shadow-main);
+  margin-bottom: var(--padding-medium);
+  resize: vertical;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+#description {
+  min-height: 80px;
+}
+
+.lesson-info li {
+  margin-top: var(--padding-small);
+  font-size: var(--font-size-base);
+  color: var(--text-color-dark);
+}
+
+/* ====================== Assignments & Reading List ====================== */
+.assignments-section,
+.reading-list-section {
+  background: var(--gradient-card);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--padding-large);
+  margin-bottom: var(--padding-large);
+}
+
+.assignments-section h2,
+.reading-list-section h2 {
+  color: var(--text-color-dark);
+  margin-bottom: var(--padding-medium);
+  border-bottom: var(--border-width-alt) solid var(--border-color);
+  padding-bottom: var(--padding-small);
+}
+
+.section-content {
+  padding: var(--padding-small);
+}
+
+/* ====================== Checklist ====================== */
+.checklist {
+  list-style: none;
+  margin-bottom: var(--padding-medium);
+}
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  padding: var(--padding-small) 0;
+  border-bottom: var(--border-width-alt) solid var(--border-color);
+}
+
+.checklist li:last-child {
+  border-bottom: none;
+}
+
+.checklist input[type="checkbox"] {
+  margin-right: var(--padding-small);
+  width: 18px;
+  height: 18px;
+  accent-color: var(--border-color);
+  cursor: pointer;
+}
+
+.checklist label {
+  flex: 1;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+}
+
+.checklist .completed {
+  text-decoration: line-through;
+  color: var(--primary-dark-accent);
+}
+
+.checklist .item-actions {
+  display: flex;
+  gap: var(--padding-small);
+}
+
+.checklist .item-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-accent);
+  font-size: var(--font-size-base);
+}
+
+.checklist .item-actions button:hover {
+  color: var(--text-color-dark);
+}
+
+/* ====================== Add Item Form ====================== */
+.add-item-form {
+  display: flex;
+  margin-top: var(--padding-medium);
+  gap: var(--padding-small);
+}
+
+.add-item-form input {
+  flex: 1;
+  padding: var(--padding-small) var(--padding-medium);
+  border: var(--border-width-alt) solid var(--border-color);
+  border-radius: var(--border-radius-small);
+  font-family: var(--font-primary);
+  background-color: var(--primary-light-accent);
+}
+
+.add-item-form button {
+  padding: var(--padding-small) var(--padding-medium);
+  background: var(--border-color);
+  color: var(--text-color-on-dark-bg);
+  border: none;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  font-family: var(--font-primary);
+}
+
+.add-item-form button:hover {
+  background: var(--primary-dark-accent);
+}
+
+/* ====================== Student-specific styles ====================== */
+.student-version .textbox {
+  background-color: var(--primary-light-hover);
+  cursor: not-allowed;
+}
+
+.student-version .btn,
+.student-version .item-actions,
+.student-version .add-item-form {
+  display: none !important;
+}
+
+.student-version .checklist input[type="checkbox"],
+.student-version .checklist label {
+  cursor: pointer;
+}
+
+/* ====================== Classroom Section ====================== */
+.classroom-section {
+  background: var(--gradient-card);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--padding-large);
+  margin-bottom: var(--padding-large);
+}
+
+.classroom-section h2 {
+  color: var(--text-color-dark);
+  margin-bottom: var(--padding-medium);
+  border-bottom: var(--border-width-alt) solid var(--border-color);
+  padding-bottom: var(--padding-small);
+}
+
+/* ====================== Courses Grid ====================== */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--padding-large);
+}
+
+.course-card,
+.add-course {
+  background: var(--gradient-card);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  padding: var(--padding-large) var(--padding-medium);
+  text-align: center;
+  box-shadow: var(--shadow-main);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: var(--min-height-card);
+}
+
+.course-card:hover,
+.add-course:hover {
+  box-shadow: var(--shadow-card-hover);
+  background: var(--gradient-card-hover);
+}
+
+.add-course {
+  border: var(--border-width-main) dashed var(--action-add-border);
+  align-items: center;
+}
+
+.add-icon {
+  font-size: var(--font-size-xxl);
+  color: var(--action-add-text);
+  margin-bottom: var(--padding-medium);
+}
+
+.add-text {
+  font-size: var(--font-size-lg);
+  color: var(--action-add-text);
+}
+
+.course-code {
+  font-size: var(--font-size-xxl);
+  color: var(--text-color-dark);
+  margin-bottom: var(--padding-medium);
+}
+
+.course-name {
+  font-size: var(--font-size-base);
+  color: var(--text-accent);
+  font-weight: normal;
+  line-height: 1.4;
+}
+
+/* ====================== Status Indicators ====================== */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-medium);
+  padding: var(--padding-large);
+  margin: var(--padding-large) 0;
+  border-radius: var(--border-radius-large);
+  font-family: var(--font-primary);
+}
+
+.status-indicator.locked {
+  background: var(--gradient-status-locked);
+  border: var(--border-width-main) solid var(--status-locked);
+  color: var(--status-locked);
+}
+
+.status-indicator.completed {
+  background: var(--gradient-status-completed);
+  border: var(--border-width-main) solid var(--status-completed);
+  color: var(--status-completed);
+}
+
+.status-indicator.available {
+  background: var(--gradient-status-available);
+  border: var(--border-width-main) solid var(--status-available);
+  color: var(--status-available);
+}
+
+.status-indicator i {
+  font-size: var(--font-size-xl);
+  min-width: 32px;
+}
+
+.status-content h3 {
+  margin: 0 0 var(--padding-small) 0;
+  font-size: var(--font-size-lg);
+}
+
+.status-content p {
+  margin: 0 0 var(--padding-medium) 0;
+  font-size: var(--font-size-base);
+  font-weight: normal;
+  line-height: 1.4;
+}
+
+/* ====================== Buttons ====================== */
+.prerequisite-btn {
+  padding: var(--padding-small) var(--padding-medium);
+  background: var(--status-locked);
+  color: var(--text-color-on-dark-bg);
+  border: none;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.prerequisite-btn:hover {
+  background: var(--action-delete-hover-bg);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--status-available);
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  margin-left: var(--padding-small);
+}
+
+.btn-link:hover {
+  color: var(--primary-dark-accent);
+}
+
+/* ====================== Lesson Status Classes ====================== */
+.main-content.lesson-locked .assignments-section,
+.main-content.lesson-locked .reading-list-section {
+  opacity: 0.5;
+  pointer-events: none;
+  position: relative;
+}
+
+.main-content.lesson-locked .assignments-section::after,
+.main-content.lesson-locked .reading-list-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-light);
+  backdrop-filter: blur(2px);
+  border-radius: var(--border-radius-large);
+  z-index: 1;
+}
+
+.main-content.lesson-completed .status-indicator {
+  border-color: var(--status-completed);
+}
+
+.main-content.lesson-available .status-indicator {
+  display: none;
+}
+
+/* ====================== Responsive Adjustments ====================== */
+@media (max-width: 1200px) {
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-indicator {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--padding-small);
+  }
+
+  .status-indicator i {
+    font-size: var(--font-size-lg);
+  }
+
+  .status-content h3 {
+    font-size: var(--font-size-md);
+  }
+
+  .status-content p {
+    font-size: var(--font-size-sm);
+  }
+}

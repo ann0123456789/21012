@@ -1,0 +1,168 @@
+/* ====================== Global ====================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+}
+
+body {
+    background-image: var(--background-image-student);
+    /* background-image: url("Everything/static/background_student.png"); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color-dark);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ====================== Sidebar Dashboard ====================== */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--gradient-sidebar);
+    color: var(--text-color-on-dark-bg);
+    height: 100vh;
+    position: fixed;
+    padding: var(--padding-medium) 0;
+    box-shadow: var(--shawdow-side-bar);
+    overflow-y: auto;
+}
+
+.logo {
+    text-align: center;
+    padding: var(--padding-medium) 0;
+    border-bottom: var(--border-width-alt) solid var(--border-color);
+    margin-bottom: var(--padding-medium);
+}
+
+.logo h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-light-accent);
+}
+
+.dashboard-menu {
+    list-style: none;
+    padding: 0 var(--padding-medium);
+}
+
+.dashboard-menu li {
+    margin-bottom: var(--padding-small);
+}
+
+.dashboard-menu a {
+    display: flex;
+    align-items: center;
+    padding: var(--padding-medium);
+    color: var(--text-color-light);
+    text-decoration: none;
+    border-radius: var(--border-radius-medium);
+    transition: all 0.3s ease;
+}
+
+.dashboard-menu a:hover,
+.dashboard-menu a.active {
+    background: var(--hover-overlay);
+}
+
+.dashboard-menu i {
+    margin-right: var(--padding-small);
+    font-size: var(--font-size-md);
+    width: 25px;
+    text-align: center;
+}
+
+/* ====================== Main Content ====================== */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: var(--padding-xlarge);
+}
+
+h1 {
+    font-size: var(--font-size-xxxl);
+    color: var(--text-color-dark);
+    margin-bottom: var(--padding-small);
+}
+
+header p {
+    font-size: var(--font-size-md);
+    color: var(--text-accent);
+}
+
+.lesson-info,
+.assignments-section,
+.reading-list-section {
+    background: var(--gradient-card);
+    border: var(--border-width-main) solid var(--border-color);
+    border-radius: var(--border-radius-large);
+    padding: var(--padding-large);
+    margin-bottom: var(--padding-large);
+    box-shadow: var(--shadow-main);
+}
+
+.lesson-info h2,
+.assignments-section h2,
+.reading-list-section h2 {
+    color: var(--text-color-dark);
+    margin-bottom: var(--padding-medium);
+    border-bottom: var(--border-width-alt) solid var(--border-color);
+    padding-bottom: var(--padding-small);
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--padding-small);
+}
+
+/* ====================== Progress Bars ====================== */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+    margin-top: var(--padding-small);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: var(--primary-light-accent);
+    border-radius: var(--border-radius-small);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--status-available);
+    border-radius: var(--border-radius-small);
+    transition: width 0.4s ease;
+}
+
+.progress-container span {
+    font-weight: bold;
+    color: var(--text-color-dark);
+    font-size: var(--font-size-base);
+    text-align: right;
+}
+
+.progress-details {
+    margin-top: 10px;
+    text-align: left;
+    line-height: 1.6;
+    font-size: var(--font-size-base);
+    color: var(--text-color-dark);
+}
+
+
+
+/* ====================== Responsive ====================== */
+@media (max-width: 768px) {
+    .main-content {
+        padding: var(--padding-medium);
+    }
+}

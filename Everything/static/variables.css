@@ -1,0 +1,367 @@
+:root {
+  --background-image-student: url("background_student.png");
+  --background-image-instructor: url("background_instructor.png");
+  --background-image-generic: url("background.png");
+  --background-image-admin: url("admin_background.png");
+
+  /* ===== SHARED BASE COLORS ===== */
+  --background-base: #FFFFFF;
+  --background-secondary: #F7F7F7;
+  --text-primary: #1E1E1E;
+  --text-secondary: #6A6A6A;
+
+/* ===== STUDENT INTERFACE (Mint Green Dominant) ===== */
+--student-primary: #5eb298;
+--student-primary-dark: #4a907a;
+--student-primary-light: #7fd6bb;
+--student-primary-hover: #99e6cc;
+--student-primary-pale: #b3fff0;
+--student-card-bg: #f0faf8;
+--student-card-hover: #e8f7f3;
+--student-sidebar-dark: #2a8a7a;     /* Lighter, brighter mint for light mode sidebar */
+--student-sidebar-darker: #1a6b5c;   /* Slightly darker for gradient */
+--student-add-card-light: #c1f5ef;   
+--student-add-card-lighter: #ddf4f1; 
+
+/* ===== INSTRUCTOR INTERFACE (Orange Dominant) ===== */
+--instructor-primary: #e46c32;
+--instructor-primary-dark: #cc5b29;
+--instructor-primary-light: #ff8051;
+--instructor-primary-hover: #f7a27b;
+--instructor-primary-pale: #ffb399;
+--instructor-card-bg: #fef6f2;
+--instructor-card-hover: #fdeee7;
+--instructor-sidebar-dark: #d35400;   /* Bright orange for light mode sidebar */
+--instructor-sidebar-darker: #a84300; /* Slightly darker for gradient */
+--instructor-add-card-light: #ffd7c2;
+--instructor-add-card-lighter: #ffe8dc;
+
+  /* ===== DEFAULT THEME (Student) ===== */
+  --primary-dark: var(--student-primary-dark);
+  --primary-dark-accent: var(--student-primary);
+  --primary-light: var(--student-primary-light);
+  --primary-light-accent: var(--student-primary-pale);
+  --primary-light-hover: var(--student-primary-hover);
+
+  --text-color-dark: var(--text-primary);
+  --text-color-light: var(--background-base);
+  --text-color-on-dark-bg: var(--background-base);
+
+  --border-color: var(--student-primary);
+  --text-accent: var(--student-primary);
+
+  /* ===== CARD COLORS (Default to Student) ===== */
+  --card-background: var(--student-card-bg);
+  --card-background-hover: var(--student-card-hover);
+  --card-border: var(--student-primary);
+  --card-text: var(--text-primary);
+
+  /* ===== SIDEBAR COLORS (Default to Student) ===== */
+  --sidebar-dark: var(--student-sidebar-dark);
+  --sidebar-darker: var(--student-sidebar-darker);
+  
+  /* ===== ADD CARD COLORS (Default to Student) ===== */
+  --add-card-light: var(--student-add-card-light);
+  --add-card-lighter: var(--student-add-card-lighter);
+
+  /* ===== STATUS COLORS ===== */
+  --status-active: #2a8a6a;
+  --status-inactive: #b22e2e;
+  --status-locked: #b22e2e;
+  --status-available: #1e6bd6;
+  --status-completed: #2a8a6a;
+
+  /* ===== ACTION COLORS ===== */
+  --action-delete-bg: #e74c3c;
+  --action-delete-hover-bg: #c0392b;
+  --action-add-border: var(--instructor-primary); /* Orange for accent in Student theme */
+  --action-add-text: var(--instructor-primary-dark);
+
+  /* ===== GRADIENTS ===== */
+  --gradient-sidebar: linear-gradient(to bottom, var(--sidebar-darker), var(--sidebar-dark));
+  --gradient-card: linear-gradient(135deg, var(--card-background), var(--card-background-hover));
+  --gradient-card-hover: linear-gradient(135deg, var(--card-background-hover), var(--primary-light-hover));
+  --gradient-add-card: linear-gradient(135deg, var(--add-card-lighter), var(--add-card-light));
+  --gradient-add-card-hover: linear-gradient(135deg, var(--add-card-light), var(--primary-light-hover));
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-primary: "Archivo Black", sans-serif;
+
+  /* Font Sizes */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-md: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-xxl: 32px;
+  --font-size-xxxl: 42px;
+
+  /* Sizing & Spacing */
+  --sidebar-width: 250px;
+  --sidebar-width-medium: 200px;
+  --border-radius-small: 6px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 12px;
+  --border-width-main: 3px;
+  --border-width-alt: 2px;
+
+  --padding-small: 10px;
+  --padding-medium: 15px;
+  --padding-large: 20px;
+  --padding-xlarge: 40px;
+
+  /* Custom component sizing */
+  --min-height-add-card: 150px;
+  --min-height-card: 120px;
+
+  /* Shadows */
+  --shadow-main: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-card-hover: 0 8px 20px rgba(0, 0, 0, 0.15);
+  --shawdow-side-bar: 3px 0 10px rgba(0, 0, 0, 0.2);
+
+  /* Effects */
+  --hover-overlay: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== DARK MODE ===== */
+:root.darkmode {
+  /* Background Images for Dark Mode */
+  --background-image-student: url("dark_background_student.png");
+  --background-image-instructor: url("dark_background_instructor.png");
+  --background-image-generic: url("dark_background.png");
+  --background-image-admin: url("dark_admin_background.png");
+
+  /* Shared Base Colors */
+  --background-base: #121212;
+  --background-secondary: #1E1E1E;
+  --text-primary: #EDEDED;
+  --text-secondary: #A9A9A9;
+
+  /* Student Interface - Much darker versions for dark mode */
+  --student-primary: #5eb298;
+  --student-primary-dark: #4a907a;
+  --student-primary-light: #7fd6bb;
+  --student-primary-hover: #99e6cc;
+  --student-primary-pale: #b3fff0;
+  --student-card-bg: #1a2f2b;
+  --student-card-hover: #1f3a36;
+  --student-sidebar-dark: #0a1a17;     /* Very dark mint for sidebar */
+  --student-sidebar-darker: #05100e;   /* Almost black for gradient */
+  --student-add-card-light: #1a3b38;   
+  --student-add-card-lighter: #2a5f5a; 
+  
+  /* Instructor Interface - Much darker versions for dark mode */
+  --instructor-primary: #e46c32;
+  --instructor-primary-dark: #cc5b29;
+  --instructor-primary-light: #ff8051;
+  --instructor-primary-hover: #f7a27b;
+  --instructor-primary-pale: #ffb399;
+  --instructor-card-bg: #2e221b;
+  --instructor-card-hover: #3a2920;
+  --instructor-sidebar-dark: #2c1a0a;   /* Very dark brown for sidebar */
+  --instructor-sidebar-darker: #1a1006; /* Almost black for gradient */
+  --instructor-add-card-light: #8b4513;
+  --instructor-add-card-lighter: #a65a29;
+
+  /* Default Theme (Student) */
+  --primary-dark: var(--student-primary-dark);
+  --primary-dark-accent: var(--student-primary);
+  --primary-light: var(--student-primary-light);
+  --primary-light-accent: var(--student-primary-pale);
+  --primary-light-hover: var(--student-primary-hover);
+
+  --text-color-dark: var(--text-primary);
+  --text-color-light: var(--text-primary);
+  --text-color-on-dark-bg: var(--text-primary);
+
+  --border-color: var(--student-primary-light);
+  --text-accent: var(--student-primary-light);
+
+  /* Card Colors */
+  --card-background: var(--student-card-bg);
+  --card-background-hover: var(--student-card-hover);
+  --card-border: var(--student-primary);
+  --card-text: var(--text-primary);
+
+  /* Sidebar Colors */
+  --sidebar-dark: var(--student-sidebar-dark);
+  --sidebar-darker: var(--student-sidebar-darker);
+  
+  /* Add Card Colors */
+  --add-card-light: var(--student-add-card-light);
+  --add-card-lighter: var(--student-add-card-lighter);
+
+  /* Status Colors */
+  --status-active: #3ecf8e;
+  --status-inactive: #e57373;
+  --status-locked: #ef5350;
+  --status-available: #64b5f6;
+  --status-completed: #43a047;
+
+  /* Action Colors */
+  --action-delete-bg: #e74c3c;
+  --action-delete-hover-bg: #c0392b;
+  --action-add-border: var(--instructor-primary-light);
+  --action-add-text: var(--instructor-primary-pale);
+
+  /* Gradients */
+  --gradient-sidebar: linear-gradient(to bottom, var(--sidebar-darker), var(--sidebar-dark));
+  --gradient-card: linear-gradient(135deg, var(--card-background), var(--card-background-hover));
+  --gradient-card-hover: linear-gradient(135deg, var(--card-background-hover), var(--primary-dark));
+  --gradient-add-card: linear-gradient(135deg, var(--add-card-lighter), var(--add-card-light));
+  --gradient-add-card-hover: linear-gradient(135deg, var(--add-card-light), var(--primary-dark));
+
+  /* Shadows */
+  --shadow-main: 0px 4px 8px rgba(0, 0, 0, 0.6);
+  --shadow-card-hover: 0 8px 20px rgba(0, 0, 0, 0.5);
+  --shawdow-side-bar: 3px 0 15px rgba(0, 0, 0, 0.6);
+
+  /* Effects */
+  --hover-overlay: rgba(255, 255, 255, 0.08);
+}
+
+/* ===== INSTRUCTOR THEME OVERRIDE ===== */
+body.instructor-theme {
+  /* Instructor Primary Colors */
+  --primary-dark: var(--instructor-primary-dark);
+  --primary-dark-accent: var(--instructor-primary);
+  --primary-light: var(--instructor-primary-light);
+  --primary-light-accent: var(--instructor-primary-pale);
+  --primary-light-hover: var(--instructor-primary-hover);
+
+  --border-color: var(--instructor-primary);
+  --text-accent: var(--instructor-primary);
+
+  /* Card Colors for Instructor */
+  --card-background: var(--instructor-card-bg);
+  --card-background-hover: var(--instructor-card-hover);
+  --card-border: var(--instructor-primary);
+
+  /* Sidebar Colors for Instructor */
+  --sidebar-dark: var(--instructor-sidebar-dark);
+  --sidebar-darker: var(--instructor-sidebar-darker);
+  
+  /* Add Card Colors for Instructor */
+  --add-card-light: var(--instructor-add-card-light);
+  --add-card-lighter: var(--instructor-add-card-lighter);
+
+  /* Action Colors - Use Mint Green for accents in Instructor theme */
+  --action-add-border: var(--student-primary);
+  --action-add-text: var(--student-primary-dark);
+
+  /* Gradients */
+  --gradient-sidebar: linear-gradient(to bottom, var(--sidebar-darker), var(--sidebar-dark));
+  --gradient-card: linear-gradient(135deg, var(--card-background), var(--card-background-hover));
+  --gradient-card-hover: linear-gradient(135deg, var(--card-background-hover), var(--primary-light-hover));
+  --gradient-add-card: linear-gradient(135deg, var(--add-card-lighter), var(--add-card-light));
+  --gradient-add-card-hover: linear-gradient(135deg, var(--add-card-light), var(--primary-light-hover));
+}
+
+/* Dark mode adjustments for instructor theme */
+body.instructor-theme.darkmode {
+  --border-color: var(--instructor-primary-light);
+  --text-accent: var(--instructor-primary-light);
+  
+  --card-background: var(--instructor-card-bg);
+  --card-background-hover: var(--instructor-card-hover);
+  --card-border: var(--instructor-primary-light);
+  
+  --sidebar-dark: var(--instructor-sidebar-dark);
+  --sidebar-darker: var(--instructor-sidebar-darker);
+  
+  --add-card-light: var(--instructor-add-card-light);
+  --add-card-lighter: var(--instructor-add-card-lighter);
+  
+  --action-add-border: var(--student-primary-light);
+  --action-add-text: var(--student-primary-pale);
+  
+  --gradient-card: linear-gradient(135deg, var(--card-background), var(--card-background-hover));
+  --gradient-card-hover: linear-gradient(135deg, var(--card-background-hover), var(--primary-dark));
+  --gradient-add-card: linear-gradient(135deg, var(--add-card-lighter), var(--add-card-light));
+  --gradient-add-card-hover: linear-gradient(135deg, var(--add-card-light), var(--primary-dark));
+}
+
+/* ===== CARD STYLING FIXES ===== */
+/* Ensure all cards use the thematic colors */
+.card, .course-card, .module-card, .info-box, .content-box {
+  background: var(--card-background) !important;
+  border: 1px solid var(--card-border) !important;
+  color: var(--card-text) !important;
+}
+
+.card:hover, .course-card:hover, .module-card:hover {
+  background: var(--card-background-hover) !important;
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Fix for course information background boxes */
+.course-info, .info-container, .details-panel {
+  background: var(--card-background) !important;
+  border: 1px solid var(--card-border) !important;
+  color: var(--card-text) !important;
+}
+
+/* Add card styling */
+.add-card, .create-new-card {
+  background: var(--gradient-add-card) !important;
+  border: 2px dashed var(--action-add-border) !important;
+  color: var(--action-add-text) !important;
+}
+
+.add-card:hover, .create-new-card:hover {
+  background: var(--gradient-add-card-hover) !important;
+}
+
+/* ===== SIZE MODES ===== */
+:root.big {
+  --font-size-xs: 16px;
+  --font-size-sm: 20px;
+  --font-size-base: 22px;
+  --font-size-md: 26px;
+  --font-size-lg: 32px;
+  --font-size-xl: 36px;
+  --font-size-xxl: 44px;
+  --font-size-xxxl: 56px;
+
+  --padding-small: 16px;
+  --padding-medium: 24px;
+  --padding-large: 32px;
+  --padding-xlarge: 64px;
+
+  --border-radius-small: 10px;
+  --border-radius-medium: 16px;
+  --border-radius-large: 20px;
+
+  --min-height-add-card: 220px;
+  --min-height-card: 180px;
+
+  --sidebar-width: 320px;
+  --sidebar-width-medium: 240px;
+}
+
+:root.small {
+  --font-size-xs: 8px;
+  --font-size-sm: 10px;
+  --font-size-base: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-xxl: 22px;
+  --font-size-xxxl: 28px;
+
+  --padding-small: 4px;
+  --padding-medium: 8px;
+  --padding-large: 12px;
+  --padding-xlarge: 24px;
+
+  --border-radius-small: 2px;
+  --border-radius-medium: 4px;
+  --border-radius-large: 6px;
+
+  --min-height-add-card: 90px;
+  --min-height-card: 70px;
+
+  --sidebar-width: 160px;
+  --sidebar-width-medium: 120px;
+}

@@ -1,0 +1,188 @@
+/* ========== Align Theme and Size Switch in One Line ========== */
+.dashboard-menu li:nth-last-child(3),
+.dashboard-menu li:nth-last-child(2) {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px 3px;
+  width: auto;
+}
+
+.dashboard-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dashboard-menu li:last-child {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Force theme + size buttons to share one line */
+#theme-switch,
+#size-switch {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+/* Optional: to make them look balanced */
+#theme-switch {
+  margin-right: 10px;
+}
+
+/* ========== Theme Switch ========== */
+#theme-switch {
+  height: 35px;
+  width: 60px;
+  border-radius: 20px;
+  background: var(--primary-light);
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: var(--shadow-main);
+}
+
+#theme-switch:hover {
+  transform: scale(1.05);
+}
+
+#theme-switch .material-symbols-outlined {
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+#theme-switch .light-icon {
+  color: #ffc107;
+}
+
+#theme-switch .dark-icon {
+  color: #f5f5f5;
+  display: none;
+}
+
+/* Dark mode active */
+.darkmode #theme-switch {
+  background: var(--primary-dark);
+  border-color: var(--border-color);
+}
+
+.darkmode #theme-switch .light-icon {
+  display: none;
+}
+
+.darkmode #theme-switch .dark-icon {
+  display: block;
+}
+
+/* ========== Size Switch ========== */
+#size-switch {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 120px;
+  height: 35px;
+  background-color: var(--primary-light);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+#size-switch span {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#size-switch span:hover {
+  background-color: var(--primary-dark-accent);
+  color: white;
+}
+
+#size-switch span.active {
+  background-color: var(--primary-dark-accent);
+  color: white;
+}
+
+/* ========== Active/Inactive Button ========== */
+#active {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#active.active-state {
+  background-color: #28a745;
+}
+
+#active.inactive-state {
+  background-color: #dc3545;
+}
+
+#active:hover {
+  transform: scale(1.03);
+}
+
+/* ========== Popup Styling ========== */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.popup button {
+  margin: 5px;
+}
+
+
+.popup p {
+  margin-bottom: 15px;
+}
+
+.ok_btn,
+.cancel_btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: 0.2s ease;
+}
+
+.ok_btn {
+  background: #dc3545;
+  color: white;
+}
+
+.ok_btn:hover {
+  background: #b52a36;
+}
+
+.cancel_btn {
+  background: #ccc;
+}
+
+.cancel_btn:hover {
+  background: #bbb;
+}

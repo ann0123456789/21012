@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+}
+
+body {
+    background-image: var(--background-image-instructor);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text-primary);
+    display: flex;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--gradient-sidebar);
+    color: var(--text-color-on-dark-bg);
+    height: 100vh;
+    position: fixed;
+    padding: var(--padding-medium) 0;
+    box-shadow: var(--shawdow-side-bar);
+}
+
+.logo { text-align: center; padding-bottom: var(--padding-medium); border-bottom: 1px solid var(--border-color); }
+.logo h2 { font-size: var(--font-size-xl); color: var(--primary-light-accent); }
+.dashboard-menu { list-style: none; padding: var(--padding-medium); }
+.dashboard-menu li { margin-bottom: var(--padding-small); }
+.dashboard-menu a { display: flex; align-items: center; padding: var(--padding-medium); color: var(--text-color-light); text-decoration: none; border-radius: var(--border-radius-medium); transition: all 0.3s ease; }
+.dashboard-menu a:hover, .dashboard-menu a.active { background: var(--hover-overlay); }
+.dashboard-menu i { margin-right: var(--padding-small); width: 25px; text-align: center; }
+
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: var(--padding-xlarge);
+}
+
+header {
+    text-align: center;
+    margin-bottom: var(--padding-xlarge);
+}
+
+h1 {
+    font-size: var(--font-size-xxxl);
+    color: var(--text-primary);
+}
+
+header p {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+}
+
+.progress-list-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-large);
+    padding: var(--padding-large);
+    box-shadow: var(--shadow-main);
+}
+
+.progress-list-header {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--padding-medium);
+    border-bottom: 2px solid var(--card-border);
+    font-weight: bold;
+    color: var(--text-accent);
+    font-size: var(--font-size-md);
+}
+
+.progress-list-header span:last-child {
+    flex-basis: 60%;
+    text-align: left;
+}
+
+.student-progress-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--padding-medium);
+    border-bottom: 1px solid var(--card-border);
+}
+
+.student-progress-item:last-child {
+    border-bottom: none;
+}
+
+.student-name {
+    flex-basis: 40%;
+    font-weight: bold;
+}
+
+.progress-bar-container {
+    flex-basis: 60%;
+    display: flex;
+    align-items: center;
+    gap: var(--padding-medium);
+    background-color: var(--background-secondary);
+    border-radius: var(--border-radius-large);
+    padding: 5px;
+}
+
+.progress-bar {
+    height: 20px;
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary-light));
+    border-radius: var(--border-radius-medium);
+    transition: width 0.5s ease-in-out;
+}
+
+.progress-text {
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+}
+
+.loading-text, .error-text {
+    text-align: center;
+    padding: var(--padding-xlarge);
+    font-style: italic;
+    color: var(--text-secondary);
+}

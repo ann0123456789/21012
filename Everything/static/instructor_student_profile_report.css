@@ -1,0 +1,12 @@
+body.instructor-theme {
+    background-image: var(--background-image-instructor);
+}
+
+.status-btn.active {
+    background-color: var(--primary-dark-accent); 
+    color: white;
+}
+
+.instructor-theme .sidebar .dashboard-menu a {
+    color: var(--text-color-light); 
+}

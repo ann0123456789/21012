@@ -1,0 +1,110 @@
+/* General body styling */
+body {
+  font-family: "Archivo Black", sans-serif;
+  padding: 15px;
+  background-image: var(--background-image-generic); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  text-align: center;
+  color: #1a3b38;
+}
+
+/* Main heading outside the box */
+#mainHeading {
+  font-size: 50px; /* smaller font */
+  margin-bottom: 30px;
+  color: #1a3b38;
+  text-align: center;
+}
+
+/* Form container */
+.login-container {
+  display: inline-block;
+  background-color: rgba(193, 245, 239, 0.9);
+  padding: 30px; /* smaller padding */
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  width: 320px; /* narrower width */
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 90%;
+  padding: 10px; /* smaller padding */
+  margin: 10px 0; /* less spacing */
+  border: 2px solid #367972;
+  border-radius: 8px;
+  font-size: 16px; /* smaller font */
+  font-family: "Archivo Black", sans-serif;
+  box-sizing: border-box;
+  height: 45px; /* consistent height */
+}
+
+/* Dropdown arrow styling */
+select {
+  background-color: #ffffff; /* white box */
+  color: #367972;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23367972' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+/* Focus state */
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #1a3b38;
+  box-shadow: 0 0 4px #1a3b38;
+}
+
+/* Submit button */
+button {
+  width: 90%;
+  padding: 12px; /* smaller padding */
+  margin-top: 20px;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 16px; /* smaller font */
+  font-weight: bold;
+  color: #93e8df;
+  background-color: rgb(45, 87, 83);
+  border: 2px solid #316560;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #84d4cb;
+  color: rgb(44, 73, 70);
+  transform: translateY(-2px);
+}
+
+/* Back to login link */
+#backToLogin {
+  margin-top: 15px;
+}
+
+#backToLogin a {
+  color: #367972;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 14px; /* smaller font */
+}
+
+#backToLogin a:hover {
+  color: #1a3b38;
+  text-decoration: underline;
+}

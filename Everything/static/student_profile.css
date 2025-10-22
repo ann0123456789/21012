@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+}
+
+body {
+    background-image: var(--background-image-student);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text-color-dark);
+    display: flex;
+}
+
+/* ====================== Sidebar Dashboard ====================== */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--gradient-sidebar);
+    color: var(--text-color-on-dark-bg);
+    height: 100vh;
+    position: fixed;
+    padding: var(--padding-medium) 0;
+    box-shadow: var(--shawdow-side-bar);
+    overflow-y: auto;
+}
+
+.logo {
+    text-align: center;
+    padding: var(--padding-medium) 0;
+    border-bottom: var(--border-width-alt) solid var(--border-color);
+    margin-bottom: var(--padding-medium);
+}
+
+.logo h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-light-accent);
+}
+
+.dashboard-menu {
+    list-style: none;
+    padding: 0 var(--padding-medium);
+}
+
+.dashboard-menu li {
+    margin-bottom: var(--padding-small);
+}
+
+.dashboard-menu a {
+    display: flex;
+    align-items: center;
+    padding: var(--padding-medium);
+    color: var(--text-color-light);
+    text-decoration: none;
+    border-radius: var(--border-radius-medium);
+    transition: all 0.3s ease;
+}
+
+.dashboard-menu a:hover,
+.dashboard-menu a.active {
+    background: var(--hover-overlay);
+}
+
+.dashboard-menu i {
+    margin-right: var(--padding-small);
+    font-size: var(--font-size-md);
+    width: 25px;
+    text-align: center;
+}
+
+/* Main content */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: var(--padding-xlarge);
+    background: transparent; /* Ensure no white background */
+}
+
+header {
+    text-align: center;
+    margin-bottom: var(--padding-xlarge);
+}
+
+h1 {
+    font-size: var(--font-size-xxxl);
+    color: var(--text-color-dark);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Remove any white backgrounds */
+.main-content, 
+.course-info, 
+#studentProfileForm {
+    background: transparent !important;
+}
+
+
+/* Form section */
+#studentProfileForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-large);
+    background: transparent;
+    border: var(--border-width-main) solid var(--card-border);
+    border-radius: var(--border-radius-large);
+    padding: var(--padding-xlarge);
+    box-shadow: var(--shadow-main);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size-base);
+}
+
+.form-group label {
+    margin-bottom: var(--padding-small);
+    font-weight: bold;
+    color: var(--text-color-dark);
+    font-size: var(--font-size-base);
+}
+
+.form-group input,
+.form-group select {
+    padding: var(--padding-medium);
+    border: var(--border-width-main) solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    background-color: var(--background-base);
+    color: var(--text-color-dark);
+    font-size: var(--font-size-base);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-main);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-dark-accent);
+    box-shadow: 0 0 0 2px rgba(42, 95, 90, 0.2);
+}
+
+/* Remove the darkmode specific styles since they're handled by CSS variables */
+.status-btn {
+    padding: var(--padding-medium) var(--padding-large);
+    border: none;
+    border-radius: var(--border-radius-medium);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--font-size-base);
+    box-shadow: var(--shadow-main);
+}
+
+.status-btn.active {
+    background-color: var(--status-active);
+    color: var(--text-color-on-dark-bg);
+}
+
+.status-btn.inactive {
+    background-color: var(--status-inactive);
+    color: var(--text-color-on-dark-bg);
+}
+
+.status-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+.toggle-btn {
+    padding: var(--padding-small) var(--padding-medium);
+    background-color: var(--primary-light);
+    border: var(--border-width-main) solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    color: var(--text-color-dark);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-main);
+}
+
+.toggle-btn:hover {
+    background-color: var(--primary-light-hover);
+    transform: translateY(-2px);
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+    .sidebar {
+        width: var(--sidebar-width-medium);
+    }
+    .main-content {
+        margin-left: var(--sidebar-width-medium);
+        padding: var(--padding-large);
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: var(--padding-medium);
+    }
+    h1 {
+        font-size: var(--font-size-xxl);
+    }
+    #studentProfileForm {
+        padding: var(--padding-large);
+    }
+}

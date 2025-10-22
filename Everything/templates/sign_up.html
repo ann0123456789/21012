@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup - LMS</title>
+  <link rel="stylesheet" href="/static/sign_up.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href ="/static/theme-switch.css" />
+  <link rel="stylesheet" href ="/static/variables.css" />
+</head>
+<body>
+  <h1 id="mainHeading">Create Your Account</h1>
+
+  <div class="login-container">
+    <form id="signupForm" action="/signup" method="POST">
+      <!-- Title selection as dropdown -->
+      <select name="title" required>
+        <option value="" disabled selected>Title</option>
+        <option value="Mr">Mr</option>
+        <option value="Ms">Ms</option>
+      </select>
+
+      <!-- Name fields -->
+      <input type="text" name="firstName" placeholder="First Name" required>
+      <input type="text" name="lastName" placeholder="Last Name" required>
+
+      <!-- Email and password -->
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+
+      <!-- Status selection as dropdown -->
+      <select name="status" required>
+        <option value="" disabled selected>Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+
+      <button type="submit">Sign Up</button>
+
+      <!-- Back to Login link -->
+      <div id="backToLogin">
+        <a href="/login">Back to Login</a>
+      </div>
+    </form>
+  </div>
+
+  <script src="/static/sign_up.js?v=1.1" defer></script>
+  <script type ="text/javascript" src = "/static/font-switch.js" defer ></script>
+  <script type ="text/javascript" src = "/static/darkmode.js" defer ></script>
+</body>
+</html>

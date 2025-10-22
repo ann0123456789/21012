@@ -1,0 +1,566 @@
+/* ==========================================================
+   GLOBAL RESET & BODY
+========================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+}
+
+body {
+    background-image:  var(--background-image-admin);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: var(--text-color-dark);
+    display: flex;
+}
+
+/* ==========================================================
+   SIDEBAR DASHBOARD
+========================================================== */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--gradient-sidebar);
+    color: var(--text-color-on-dark-bg);
+    height: 100vh;
+    position: fixed;
+    padding: var(--padding-large) 0;
+    box-shadow: var(--shadow-side-bar);
+    overflow-y: auto;
+}
+
+.logo {
+    text-align: center;
+    padding: var(--padding-large) 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--padding-large);
+}
+
+.logo h2 {
+    font-size: var(--font-size-xl);
+    color: var(--primary-light-accent);
+}
+
+.dashboard-menu {
+    list-style: none;
+    padding: 0 var(--padding-medium);
+}
+
+.dashboard-menu li {
+    margin-bottom: var(--padding-small);
+}
+
+.dashboard-menu a {
+    display: flex;
+    align-items: center;
+    padding: var(--padding-medium);
+    color: var(--text-color-light);
+    text-decoration: none;
+    border-radius: var(--border-radius-medium);
+    transition: all 0.3s ease;
+}
+
+.dashboard-menu a:hover,
+.dashboard-menu a.active {
+  background: var(--hover-overlay);
+}
+
+.dashboard-menu i {
+    margin-right: var(--padding-small);
+    font-size: var(--font-size-lg);
+    width: 25px;
+    text-align: center;
+}
+
+/* ==========================================================
+   MAIN CONTENT
+========================================================== */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: var(--padding-xlarge);
+}
+
+header {
+    text-align: center;
+    margin-bottom: var(--padding-xlarge);
+}
+
+h1 {
+    font-size: var(--font-size-xxxl);
+    color: var(--text-color-dark);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: var(--padding-large);
+}
+
+/* ==========================================================
+   VIEW TOGGLE BUTTON
+========================================================== */
+.view-toggle {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--padding-large);
+}
+
+.toggle-btn {
+    padding: var(--padding-small) var(--padding-large);
+    background-color: var(--card-background);
+    border: var(--border-width-main) solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    color: var(--text-accent);
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-main);
+}
+
+.toggle-btn:hover {
+    background-color: var(--card-background-hover);
+}
+
+/* ==========================================================
+   INSTRUCTORS GRID / LIST
+========================================================== */
+.instructors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--padding-xlarge);
+    align-items: flex-start;
+}
+
+
+/*  Make list view consistent in width and spacing */
+.instructors-list {
+    background: var(--gradient-add-card);
+    border: var(--border-width-main) dashed var(--action-add-border);
+    border-radius: var(--border-radius-large);
+    padding: var(--padding-large);
+    text-align: center;
+    box-shadow: var(--shadow-main);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: var(--min-height-add-card);
+    gap: 10px;
+}
+
+
+
+/*  Dynamic instructor cards grid */
+.admin-instructor-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    gap: var(--padding-small);
+    align-items: start;
+    justify-items: center;
+    width: 100%;
+    margin-top: var(--padding-large);
+}
+
+
+/* ==========================================================
+   INSTRUCTOR CARDS
+========================================================== */
+.admin-card,
+.instructor-list-item {
+    background: var(--gradient-card);
+    border: var(--border-width-main) solid var(--border-color);
+    border-radius: var(--border-radius-large);
+    padding: var(--padding-large);
+    box-shadow: var(--shadow-main);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.admin-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* ✅ keeps header/body/buttons aligned */
+    min-height: var(--min-height-card);
+    /* ✅ consistent card height */
+    box-sizing: border-box;
+}
+
+
+.instructors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--admin-card-width), 1fr));
+    gap: var(--padding-xlarge);
+    align-items: start;
+    justify-items: center;
+    width: 100%;
+    margin-top: var(--padding-large);
+}
+
+
+
+.admin-card,
+.add-instructor {
+    max-width: 100%;
+    width: var(--admin-card-width);
+    height: var(--admin-card-height);
+    transition: all 0.3s ease;
+}
+
+
+.admin-instructor-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--admin-card-width), 1fr));
+    gap: var(--padding-xlarge);
+    align-items: start;
+    justify-items: center;
+    width: 100%;
+    margin-top: var(--padding-large);
+}
+
+
+:root {
+    /* Custom component sizing */
+    --min-height-add-card: 150px;
+    --min-height-card: 120px;
+
+    /* NEW: Admin card size (default = medium mode) */
+    --admin-card-width: 400px;
+    --admin-card-height: 200px;
+}
+
+:root.small {
+    --admin-card-width: 300px;
+    --admin-card-height: 150px;
+}
+
+:root.big {
+    --admin-card-width: 500px;
+    --admin-card-height: 250px;
+}
+
+
+
+.instructor-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-medium);
+}
+
+.admin-card:hover,
+.instructor-list-item:hover {
+    box-shadow: var(--shadow-card-hover);
+    background: var(--gradient-card-hover);
+}
+
+.admin-header {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--text-color-dark);
+    margin-bottom: var(--padding-small);
+}
+
+.admin-body {
+    font-size: var(--font-size-base);
+    color: var(--text-accent);
+}
+
+/* ==========================================================
+   ADD INSTRUCTOR BUTTONS
+========================================================== */
+.add-instructor {
+    background: var(--gradient-add-card);
+    border: var(--border-width-main) dashed var(--action-add-border);
+    border-radius: var(--border-radius-large);
+    padding: var(--padding-large);
+    text-align: center;
+    box-shadow: var(--shadow-main);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 220px;
+    gap: 10px;
+}
+
+.add-instructor:hover,
+.add-instructor-list:hover {
+    background: var(--gradient-add-card-hover);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.add-icon,
+.list-add-icon {
+    color: var(--action-add-text);
+}
+
+.add-icon {
+    font-size: 40px;
+}
+
+.list-add-icon {
+    font-size: 24px;
+}
+
+.add-text {
+    font-size: 22px;
+    color: var(--action-add-text);
+}
+
+.list-add-text {
+    font-size: 18px;
+    color: var(--action-add-text);
+}
+
+/* ==========================================================
+   BUTTONS INSIDE CARDS
+========================================================== */
+.admin-buttons {
+    margin-top: var(--padding-medium);
+    display: flex;
+    justify-content: center;
+    gap: var(--padding-small);
+}
+
+.editBtn,
+.deleteBtn {
+    padding: var(--padding-small) var(--padding-medium);
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--font-size-sm);
+    box-shadow: var(--shadow-main);
+}
+
+.editBtn {
+    background-color: var(--primary-light-accent);
+    color: var(--text-color-dark);
+}
+
+.deleteBtn {
+    background-color: var(--error-bg);
+    color: var(--text-color-on-dark-bg);
+}
+
+.editBtn:hover {
+    background-color: var(--primary-light-hover);
+}
+
+.deleteBtn:hover {
+    background-color: var(--error-bg-hover);
+}
+
+/* ==========================================================
+   MODAL STYLING
+========================================================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: var(--background-light, #cdffee);
+    color: var(--text-color);
+    margin: 10% auto;
+    padding: var(--padding-xlarge);
+    border-radius: var(--border-radius-large);
+    width: 40%;
+    box-shadow: var(--shadow-main);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fix modal readability in dark mode */
+.darkmode .modal-content {
+    background-color: var(--background-dark, #417463);
+    color: var(--text-color-light, #ffffff);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: var(--font-size-xl);
+    color: var(--text-accent);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--error-bg);
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: var(--padding-large);
+    color: var(--text-color-dark);
+}
+
+#instructorForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-medium);
+}
+
+#instructorForm label {
+    font-weight: bold;
+    color: var(--text-color-dark);
+}
+
+#instructorForm input,
+#instructorForm select {
+    padding: var(--padding-small);
+    border: var(--border-width-main) solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-base);
+}
+
+#saveInstructorBtn {
+    padding: var(--padding-small) var(--padding-large);
+    background-color: var(--primary-light-accent);
+    border: none;
+    border-radius: var(--border-radius-medium);
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: var(--font-size-base);
+    color: var(--text-color-dark);
+}
+
+#saveInstructorBtn:hover {
+    background-color: var(--primary-light-hover);
+}
+
+
+/* ==========================================================
+   RESPONSIVE LAYOUTS
+========================================================== */
+@media (max-width: 1200px) {
+    .instructors-grid {
+        justify-content: center;
+    }
+
+    .admin-card {
+        width: 45%;
+    }
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: var(--sidebar-width-medium);
+    }
+
+    .main-content {
+        margin-left: var(--sidebar-width-medium);
+        padding: var(--padding-large) var(--padding-medium);
+    }
+
+    .admin-card {
+        width: 48%;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .instructors-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-card {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: var(--font-size-xxl);
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+}
+
+/* ==========================================================
+   ANIMATIONS
+========================================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================
+   DARK / LIGHT MODE FIXES
+========================================================== */
+.darkmode .modal-content h2,
+.darkmode #instructorForm label {
+    color: var(--text-color-light, #ffffff);
+}
+
+.darkmode #saveInstructorBtn {
+    background-color: var(--primary-dark-accent, #0db47d);
+    color: #ffffff;
+}
+
+.darkmode #saveInstructorBtn:hover {
+    background-color: var(--primary-light-hover, #13d494);
+}
+
+:not(.darkmode) #saveInstructorBtn,
+:not(.darkmode) .editBtn {
+    background-color: var(--primary-dark-accent, #0db47d);
+    color: var(--text-color-light, #ffffff);
+}
+
+:not(.darkmode) #saveInstructorBtn:hover,
+:not(.darkmode) .editBtn:hover {
+    background-color: var(--primary-light-hover, #13d494);
+    color: #ffffff;
+}
+
+:not(.darkmode) .deleteBtn {
+    background-color: var(--error-bg, #d9534f);
+    color: #ffffff;
+}
+
+:not(.darkmode) .deleteBtn:hover {
+    background-color: var(--error-bg-hover, #c9302c);
+}

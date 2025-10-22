@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/variables.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="/static/theme-switch.css" />
+    <link rel="stylesheet" href="/static/student_report_course.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+
+<body class="student-theme">
+    <!-- Sidebar Dashboard -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>EduBridge</h2>
+        </div>
+        <ul class="dashboard-menu">
+            <li><a href="/student_course_management"><i class="fas fa-book"></i> Course</a></li>
+            <li><a href="/sidebar_classroom_std"><i class="fas fa-chalkboard"></i> Classroom</a></li>
+            <li><a href="/profile"><i class="fas fa-user-graduate"></i> Student</a></li>
+            <li><a href="/student_report_navigation" class="active"><i class="fas fa-chart-bar"></i> Report</a></li>
+            <li><a href="/"><i class="fas fa-sign-out-alt"></i> Log out</a></li>
+            <li>
+                <button id="theme-switch">
+                    <span class="material-symbols-outlined light-icon">light_mode</span>
+                    <span class="material-symbols-outlined dark-icon">dark_mode</span>
+                </button>
+            </li>
+            <li>
+                <button id="size-switch">
+                    <span class="small-button">S</span>
+                    <span class="medium-button">M</span>
+                    <span class="large-button">L</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <div class="lesson-header-bar">
+                <div>
+                    <h1 id="courseName">Course Name</h1>
+                    <p>Course ID: <span id="courseId"></span></p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Student Info & Overall Progress -->
+        <section class="lesson-info">
+            <h2>Current Progress</h2>
+            <ul>
+                <li><strong>Name:</strong> <span id="studentName"></span></li>
+                <li><strong>Total Current Progress:</strong></li>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="overallProgress" class="progress-fill"></div>
+                    </div>
+                    <span id="overallText"></span>
+                </div>
+            </ul>
+        </section>
+
+        <!-- Assignment Progress -->
+        <section class="assignments-section">
+            <h2>Assignments Progress</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="assignmentProgress" class="progress-fill"></div>
+                </div>
+                <span id="assignmentText"></span>
+            </div>
+            <div class="progress-details">
+                <p><strong>Total Assignments:</strong> <span id="totalAssignments">0</span></p>
+                <p><strong>Completed Assignments:</strong> <span id="completedAssignments">0</span></p>
+            </div>
+        </section>
+
+        <!-- Reading List Progress -->
+        <section class="reading-list-section">
+            <h2>Reading List Progress</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="readingProgress" class="progress-fill"></div>
+                </div>
+                <span id="readingText"></span>
+            </div>
+            <div class="progress-details">
+                <p><strong>Total Reading List:</strong> <span id="totalReading">0</span></p>
+                <p><strong>Completed Reading List:</strong> <span id="completedReading">0</span></p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/student_report_course.js"></script>
+    <script src="/static/font-switch.js" defer></script>
+    <script src="/static/darkmode.js" defer></script>
+</body>
+
+</html>

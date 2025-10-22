@@ -1,0 +1,123 @@
+body {
+  font-family: var(--font-primary);
+  padding: var(--padding-large);
+  background-image: var(--background-image-generic);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text-color-dark);
+}
+
+#searchHeading {
+  width: 100%;
+  font-size: var(--font-size-xxxl);
+  font-family: var(--font-primary);
+  color: var(--text-color-dark);
+  text-align: left;
+}
+
+#courseSearch {
+  width: 250px;
+  padding: var(--padding-small);
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  box-sizing: border-box;
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  font-family: var(--font-primary);
+  background-color: var(--primary-light-accent);
+  box-shadow: var(--shadow-main);
+}
+
+#courseList {
+  margin-top: var(--padding-large);
+  font-family: var(--font-primary);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-color-dark);
+}
+
+th, td {
+  border: var(--border-width-main) solid var(--border-color);
+  padding: var(--padding-medium);
+  text-align: left;
+}
+
+th {
+  font-size: var(--font-size-md);
+  font-weight: bolder;
+}
+
+td {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+}
+
+#saveBtn {
+  margin-top: var(--padding-large);
+}
+
+#searchBtn {
+  margin-left: var(--padding-small);
+}
+
+button {
+  width: 100px;
+  height: 30px;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  box-shadow: var(--shadow-main);
+  border-radius: var(--border-radius-medium);
+  background-color: var(--primary-light-accent);
+  border: var(--border-width-main) solid var(--border-color);
+  color: var(--text-accent);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+}
+
+.searchwrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+input {
+  font-size: var(--font-size-base);
+}
+
+.course-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.25rem;
+  margin-top: var(--padding-large);
+}
+
+.card {
+  border: var(--border-width-main) solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  padding: var(--padding-medium);
+  background-color: var(--primary-light-accent);
+  box-shadow: var(--shadow-main);
+}
+
+.card .header {
+  font-size: var(--font-size-md);
+  font-weight: bolder;
+  margin-bottom: var(--padding-medium);
+  color: var(--text-color-dark);
+}
+
+.card .body {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  color: var(--text-color-dark);
+}
+
+.hide {
+  display: none;
+}
