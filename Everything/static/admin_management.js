@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 // ===== Sidebar Navigation Highlight =====
 document.querySelectorAll(".dashboard-menu a").forEach((link) => {
     link.addEventListener("click", function () {
@@ -68,68 +70,68 @@ addInstructorList.addEventListener("click", () => openModal(false));
 
 // ===== Form Submit Handler =====
 form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value; // prefilled (plain text)
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value; // prefilled (plain text)
 
-  if (!name || !email) {
-    alert("Name and Email are required.");
-    return;
-  }
-
-  try {
-    const isEdit = !!editingId;
-    const url = isEdit ? "/update_ins" : "/create_ins";
-    const method = isEdit ? "PUT" : "POST";
-    const body = isEdit
-      ? { ins_id: editingId, ins_name: name, email, password }
-      : { ins_name: name, email, password };
-
-    const res = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(body),
-    });
-
-    // Try to parse JSON; if it fails, show raw text
-    let data;
-    const ct = res.headers.get("content-type") || "";
-    if (ct.includes("application/json")) {
-      data = await res.json();
-    } else {
-      const text = await res.text();
-      throw new Error(`Unexpected response (${res.status}): ${text}`);
+    if (!name || !email) {
+        alert("Name and Email are required.");
+        return;
     }
 
-    if (!res.ok || data.status !== "success") {
-      alert(data.message || `Failed (${res.status}).`);
-      return;
+    try {
+        const isEdit = !!editingId;
+        const url = isEdit ? `${API_BASE_URL}/update_ins` : `${API_BASE_URL}/create_ins`;
+        const method = isEdit ? "PUT" : "POST";
+        const body = isEdit
+            ? { ins_id: editingId, ins_name: name, email, password }
+            : { ins_name: name, email, password };
+
+        const res = await fetch(url, {
+            method,
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(body),
+        });
+
+        // Try to parse JSON; if it fails, show raw text
+        let data;
+        const ct = res.headers.get("content-type") || "";
+        if (ct.includes("application/json")) {
+            data = await res.json();
+        } else {
+            const text = await res.text();
+            throw new Error(`Unexpected response (${res.status}): ${text}`);
+        }
+
+        if (!res.ok || data.status !== "success") {
+            alert(data.message || `Failed (${res.status}).`);
+            return;
+        }
+
+        await renderInstructors();
+        closeModalFunc();
+
+    } catch (err) {
+        console.error("Failed to save instructor:", err);
+        alert(err.message || "An unexpected error occurred. Please try again.");
     }
-
-    await renderInstructors();
-    closeModalFunc();
-
-  } catch (err) {
-    console.error("Failed to save instructor:", err);
-    alert(err.message || "An unexpected error occurred. Please try again.");
-  }
 });
 
 
 
-async function fetch_ins(){
-    try{
-        const res = await fetch('/render_ins',{credentials : "include"});
+async function fetch_ins() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/render_ins`, { credentials: "include" });
         const data = await res.json();
         console.log(data.results)
-        if (data.status === "success" && data.results.length > 0){
+        if (data.status === "success" && data.results.length > 0) {
             return data.results;
         }
-    }catch(err){
-        console.error("Failed to fetch classrooms",err);
+    } catch (err) {
+        console.error("Failed to fetch classrooms", err);
     }
 }
 // ===== Create Instructor Elements =====
@@ -165,28 +167,28 @@ function createInstructorElement(instructor, isList) {
         });
     });
 
-    deleteBtn.addEventListener("click", async() => delete_ins(instructor));
+    deleteBtn.addEventListener("click", async () => delete_ins(instructor));
 
     return element;
 }
 
-async function delete_ins(instructor){
-    try{
-        fetch(`/delete_ins`,{
-            method : "DELETE",
-            headers : {"Content-Type" : "application/json"},
-            body: JSON.stringify({ins_id: instructor.id}),
-            credentials : "include"
+async function delete_ins(instructor) {
+    try {
+        fetch(`${API_BASE_URL}/delete_ins`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ins_id: instructor.id }),
+            credentials: "include"
         })
-        .then((res) => res.json())
-        .then((data) => {
-            if (data.status === "success"){
-                console.log("it worked")
-                renderInstructors();
-            }
-        })
-    }catch(err){
-        console.error("Failed to fetch classrooms",err);
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.status === "success") {
+                    console.log("it worked")
+                    renderInstructors();
+                }
+            })
+    } catch (err) {
+        console.error("Failed to fetch classrooms", err);
     }
 }
 // ===== Render Instructors (show only active view) =====

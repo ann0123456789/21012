@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 // ---------- Fetch helpers ----------
 async function fetchJSON(url, opts = {}) {
   const res = await fetch(url, opts);
@@ -16,7 +18,7 @@ async function fetchJSON(url, opts = {}) {
 async function fetch_classroom_details(classroomId) {
   if (!classroomId) return null;
   try {
-    const data = await fetchJSON(`/indi_classroom?classroom_id=${encodeURIComponent(classroomId)}`);
+    const data = await fetchJSON(`${API_BASE_URL}/indi_classroom?classroom_id=${encodeURIComponent(classroomId)}`);
     if (data && data.found && Array.isArray(data.results) && data.results.length > 0) {
       return data.results[0];
     }
@@ -29,7 +31,7 @@ async function fetch_classroom_details(classroomId) {
 
 async function fetch_lessons_in_classroom(classroomId) {
   try {
-    const data = await fetchJSON(`/fetch_classroom_lessons?classroom_id=${encodeURIComponent(classroomId)}`);
+    const data = await fetchJSON(`${API_BASE_URL}/fetch_classroom_lessons?classroom_id=${encodeURIComponent(classroomId)}`);
     return (data && data.found && Array.isArray(data.results)) ? data.results : [];
   } catch (err) {
     console.error("Failed to get lessons:", err);
@@ -39,7 +41,7 @@ async function fetch_lessons_in_classroom(classroomId) {
 
 async function fetch_instructors() {
   try {
-    const data = await fetchJSON("/api/instructors");
+    const data = await fetchJSON(`${API_BASE_URL}/api/instructors`);
     if (data.ok && Array.isArray(data.instructors)) {
       return data.instructors.map(x => ({
         id: x.id ?? x.Ins_id,
@@ -54,7 +56,7 @@ async function fetch_instructors() {
 
 async function fetch_units() {
   try {
-    const data = await fetchJSON("/api/units");
+    const data = await fetchJSON(`${API_BASE_URL}/api/units`);
     return (data && data.ok && Array.isArray(data.units)) ? data.units : [];
   } catch (e) {
     console.error("Failed to fetch units", e);
@@ -67,24 +69,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const classID = urlParams.get("classroom_id");
 
-  const classroomNameEl       = document.getElementById("classroomName");
-  const classroomNameInput    = document.getElementById("classroomNameInput");
-  const classroomIdEl         = document.getElementById("classroomId");
-  const supervisorEl          = document.getElementById("supervisor");
-  const studentListEl         = document.getElementById("studentList");
-  const durationEl            = document.getElementById("duration");
+  const classroomNameEl = document.getElementById("classroomName");
+  const classroomNameInput = document.getElementById("classroomNameInput");
+  const classroomIdEl = document.getElementById("classroomId");
+  const supervisorEl = document.getElementById("supervisor");
+  const studentListEl = document.getElementById("studentList");
+  const durationEl = document.getElementById("duration");
   const unitIdEl = document.getElementById("unitId");
 
-  const cardViewEl            = document.getElementById("cardView");
-  const listViewEl            = document.getElementById("listView");
+  const cardViewEl = document.getElementById("cardView");
+  const listViewEl = document.getElementById("listView");
   const lessonListContainerEl = document.getElementById("lessonListContainer");
-  const lessonCardTemplate    = document.getElementById("lessonCardTemplate");
-  const lessonListTemplate    = document.getElementById("lessonListTemplate");
+  const lessonCardTemplate = document.getElementById("lessonCardTemplate");
+  const lessonListTemplate = document.getElementById("lessonListTemplate");
 
   const viewToggleBtn = document.getElementById("viewToggle");
-  const editBtn       = document.getElementById("editClassroomBtn");
-  const saveBtn       = document.getElementById("saveClassroomBtn");
-  const cancelBtn     = document.getElementById("cancelClassroomBtn");
+  const editBtn = document.getElementById("editClassroomBtn");
+  const saveBtn = document.getElementById("saveClassroomBtn");
+  const cancelBtn = document.getElementById("cancelClassroomBtn");
 
   function populateSupervisorSelect(options, currentId) {
     if (!supervisorEl) return;
@@ -108,35 +110,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   function populateUnitSelect(options, currentUnitId) {
-  if (!unitIdEl) return;
-  unitIdEl.innerHTML = "";
-  const placeholder = document.createElement("option");
-  placeholder.value = "";
-  placeholder.textContent = "-- Select Unit --";
-  unitIdEl.appendChild(placeholder);
+    if (!unitIdEl) return;
+    unitIdEl.innerHTML = "";
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "-- Select Unit --";
+    unitIdEl.appendChild(placeholder);
 
-  (options || []).forEach(u => {
-    const opt = document.createElement("option");
-    // API returns {unit_id, title}; show both for clarity
-    opt.value = String(u.unit_id);
-    opt.textContent = `${u.unit_id} — ${u.title}`;
-    unitIdEl.appendChild(opt);
-  });
+    (options || []).forEach(u => {
+      const opt = document.createElement("option");
+      // API returns {unit_id, title}; show both for clarity
+      opt.value = String(u.unit_id);
+      opt.textContent = `${u.unit_id} — ${u.title}`;
+      unitIdEl.appendChild(opt);
+    });
 
-  if (currentUnitId != null) {
-    unitIdEl.value = String(currentUnitId);
+    if (currentUnitId != null) {
+      unitIdEl.value = String(currentUnitId);
+    }
   }
-}
 
   function loadClassroom(data) {
     const name = data.classroom_name ?? "";
 
-    if (classroomNameEl)    classroomNameEl.textContent = name;
+    if (classroomNameEl) classroomNameEl.textContent = name;
     if (classroomNameInput) classroomNameInput.value = name;
-    if (classroomIdEl)      classroomIdEl.value = data.classroom_id ?? "";
-    if (supervisorEl)       supervisorEl.value = data.instructor_id ?? "";
-    if (unitIdEl)           unitIdEl.value = data.unit_id ?? "";
-    if (durationEl)         durationEl.value = data.duration || "4 weeks";
+    if (classroomIdEl) classroomIdEl.value = data.classroom_id ?? "";
+    if (supervisorEl) supervisorEl.value = data.instructor_id ?? "";
+    if (unitIdEl) unitIdEl.value = data.unit_id ?? "";
+    if (durationEl) durationEl.value = data.duration || "4 weeks";
 
     // Students
     if (studentListEl) {
@@ -165,13 +167,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function setEditable(isEditable) {
-    [classroomIdEl, supervisorEl,durationEl, unitIdEl].forEach(el => { if (el) el.disabled = !isEditable; });
-    if (classroomNameEl)    classroomNameEl.style.display = isEditable ? "none" : "block";
+    [classroomIdEl, supervisorEl, durationEl, unitIdEl].forEach(el => { if (el) el.disabled = !isEditable; });
+    if (classroomNameEl) classroomNameEl.style.display = isEditable ? "none" : "block";
     if (classroomNameInput) classroomNameInput.style.display = isEditable ? "block" : "none";
-    if (editBtn)   editBtn.style.display   = isEditable ? "none" : "inline-block";
-    if (saveBtn)   saveBtn.style.display   = isEditable ? "inline-block" : "none";
+    if (editBtn) editBtn.style.display = isEditable ? "none" : "inline-block";
+    if (saveBtn) saveBtn.style.display = isEditable ? "inline-block" : "none";
     if (cancelBtn) cancelBtn.style.display = isEditable ? "inline-block" : "none";
-    
+
   }
 
   // ✅ Moved inside so it can use the DOM elements above
@@ -192,7 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (lessonCardTemplate && cardViewEl) {
         const node = lessonCardTemplate.content.cloneNode(true);
         node.querySelector("[data-lesson-header]").textContent = l.title ?? l.name ?? "";
-        node.querySelector("[data-lesson-body]").textContent   = l.description ?? l.body ?? "";
+        node.querySelector("[data-lesson-body]").textContent = l.description ?? l.body ?? "";
         node.querySelector("[data-lesson-credit]").textContent = l.credit ?? l.credits ?? "";
         cardViewEl.appendChild(node);
       }
@@ -200,7 +202,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (lessonListTemplate && lessonListContainerEl) {
         const row = lessonListTemplate.content.cloneNode(true);
         row.querySelector("[data-lesson-header]").textContent = l.title ?? l.name ?? "";
-        row.querySelector("[data-lesson-body]").textContent   = l.description ?? l.body ?? "";
+        row.querySelector("[data-lesson-body]").textContent = l.description ?? l.body ?? "";
         row.querySelector("[data-lesson-credit]").textContent = l.credit ?? l.credits ?? "";
         lessonListContainerEl.appendChild(row);
       }
@@ -242,10 +244,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (saveBtn) saveBtn.addEventListener("click", async () => {
     const originalId = classroomData.classroom_id;
     const classroom_id_new = classroomIdEl ? classroomIdEl.value.trim() : originalId;
-    const instructor_id    = supervisorEl ? supervisorEl.value.trim() : "";
-    const classroom_name   = classroomNameInput ? classroomNameInput.value.trim() : "";
-    const duration         = durationEl ? durationEl.value : "";       // <-- add
-    const unit_id          = unitIdEl ? unitIdEl.value : "";                // <-- NEW
+    const instructor_id = supervisorEl ? supervisorEl.value.trim() : "";
+    const classroom_name = classroomNameInput ? classroomNameInput.value.trim() : "";
+    const duration = durationEl ? durationEl.value : "";       // <-- add
+    const unit_id = unitIdEl ? unitIdEl.value : "";                // <-- NEW
 
 
     if (!instructor_id) {
@@ -256,9 +258,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Please enter a classroom name.");
       return;
     }
-    if (!duration)       { alert("Please select a duration."); return; }
+    if (!duration) { alert("Please select a duration."); return; }
 
-    if (!unit_id)        { alert("Please select a unit."); return; }        // <-- NEW
+    if (!unit_id) { alert("Please select a unit."); return; }        // <-- NEW
 
     try {
       const payload = {
@@ -269,7 +271,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         unit_id,
       };
 
-      const data = await fetchJSON(`/api/classrooms/${encodeURIComponent(originalId)}`, {
+      const data = await fetchJSON(`${API_BASE_URL}/api/classrooms/${encodeURIComponent(originalId)}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -292,7 +294,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  if (editBtn)   editBtn.addEventListener("click", () => setEditable(true));
+  if (editBtn) editBtn.addEventListener("click", () => setEditable(true));
   if (cancelBtn) cancelBtn.addEventListener("click", () => { loadClassroom(classroomData); setEditable(false); });
 
   if (viewToggleBtn) {

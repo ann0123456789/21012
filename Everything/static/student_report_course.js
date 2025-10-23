@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 // =====================
 // Helper Functions
 // =====================
@@ -20,8 +22,8 @@ function setText(id, text) {
  */
 async function fetchStudentData() {
   try {
-    const res = await fetch(`http://127.0.0.1:5000/student_report_data`, {
-    credentials: "include",
+    const res = await fetch(`${API_BASE_URL}/student_report_data`, {
+      credentials: "include",
     });
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -115,18 +117,18 @@ async function renderCourseReport(data) {
 // =====================
 // Run
 // =====================
-async function student_name(){
-  try{
-    const data = await fetch(`/student_name`,{
-      credentials : "include"
+async function student_name() {
+  try {
+    const data = await fetch(`${API_BASE_URL}/student_name`, {
+      credentials: "include"
     });
 
     const res = await data.json();
-    if (res.status === "success"){
+    if (res.status === "success") {
       console.log(data.student_name)
       return res.student_name
     }
-  }catch{
+  } catch {
     console.log("Error getting student name")
     return null
   }
@@ -144,8 +146,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   data = await fetchStudentData(unitID);
 
-  let index 
-  for (let i = 0; i < data.length; i++){
+  let index
+  for (let i = 0; i < data.length; i++) {
     if (data[i].unit_id === unitID) {
       index = i;
       break;
@@ -156,5 +158,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log(data)
   renderCourseReport(data[index]);
 });
-
-

@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 const searchInput = document.getElementById("search");
 const userCardContainer = document.querySelector(
   "[data-course-cards-container]"
@@ -16,7 +18,7 @@ let isActive = true; // whether student can enroll/unenroll
 
 async function fetchStatus() {
   try {
-    const res = await fetch("/api/profile", { credentials: "include" });
+    const res = await fetch(`${API_BASE_URL}/api/profile`, { credentials: "include" });
     const data = await res.json();
     if (res.ok && data.status === "success") {
       const status = (data.profile.status || "").toLowerCase();
@@ -121,7 +123,7 @@ function unenrolCourse(courseId) {
     alert("Your account is inactive. You cannot unenroll from courses.");
     return;
   }
-  fetch("/unenroll", {
+  fetch(`${API_BASE_URL}/unenroll`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: `course_id=${encodeURIComponent(courseId)}`,
@@ -143,7 +145,7 @@ function enrolCourse(courseId) {
     alert("Your account is inactive. You cannot enroll in new courses.");
     return;
   }
-  fetch(`/enrollment`, {
+  fetch(`${API_BASE_URL}/enrollment`, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: `course_id=${encodeURIComponent(courseId)}`,
@@ -220,7 +222,7 @@ function renderEnrolledCourses(courses) {
 
 // --- Fetch helpers ---
 function fetchCourses(query = "") {
-  fetch(`/courses?q=${encodeURIComponent(query)}`)
+  fetch(`${API_BASE_URL}/courses?q=${encodeURIComponent(query)}`)
     .then((res) => res.json())
     .then((data) => {
       if (data.found && Array.isArray(data.results)) {
@@ -240,13 +242,13 @@ function fetchCourses(query = "") {
 
 function fetchEnrolledCourses() {
 
-  fetch(`/find_enrollment?studentId=${encodeURIComponent(studentId = 1)}`)
+  fetch(`${API_BASE_URL}/find_enrollment?studentId=${encodeURIComponent(studentId = 1)}`)
     .then((res) => res.json())
     .then((data) => {
       if (data.found) {
         renderEnrolledCourses(data.results);
       } else {
-        renderEnrolledCourses([]); 
+        renderEnrolledCourses([]);
       }
     })
     .catch((err) => console.error("Fetch error:", err));
@@ -297,9 +299,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const timer = setInterval(() => {
       if (popup.closed) {
         clearInterval(timer);
-        refreshAllCourseData(); 
+        refreshAllCourseData();
       }
-    }, 500); 
+    }, 500);
   };
 
   if (addCourseCard) addCourseCard.addEventListener("click", handleEnrollClick);
@@ -315,10 +317,10 @@ document.addEventListener("DOMContentLoaded", function () {
       this.classList.add("active");
     });
   });
-  window.addEventListener("pageshow", function(event) { 
-  if (event.persisted) {
-    // Page was restored from bfcache → refetch course data
-    window.location.reload(true); // simplest fix (forces reload)
-  }
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+      // Page was restored from bfcache → refetch course data
+      window.location.reload(true); // simplest fix (forces reload)
+    }
   });
 });

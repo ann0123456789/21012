@@ -12,7 +12,7 @@ _db_init_lock = threading.Lock()
 
 app = Flask(__name__)
 app.secret_key = "super_secret_key_change_me"  # Needed for session management
-CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5500", "http://localhost:5500"])
+CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5500", "http://localhost:5500", "https://edubridge-frontend.onrender.com", "https://edubridge-94lr.onrender.com"])
 
 # --- Database Configuration ---
 DB_CONFIG = {
@@ -28,67 +28,75 @@ print("🔧 DEBUG Render DB Config (at startup):", DB_CONFIG)
 
 
 SQL_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "c.sql")
+
 # --- Database Setup ---
 def setup_database():
-    """Recreate and seed the MySQL database from c.sql automatically (only if empty)."""
+    """Create the DB (if missing) and load c.sql only when tables are empty."""
+    print("🔍 Checking MySQL connection...")
+    conn = None
+    cur = None
+
     try:
-        print("🔍 Checking MySQL connection...")
-
-        # ✅ Always include port for managed DBs (Railway/Render)
-        conn = mysql.connector.connect(
-            user=DB_CONFIG['user'],
-            password=DB_CONFIG['password'],
-            host=DB_CONFIG['host'],
-            port=DB_CONFIG['port'],
-        )
-        cur = conn.cursor()
-
+        # 1) Try connect to the target DB
         try:
-            # Some managed MySQL users can’t create databases; catch and continue
-            cur.execute(f"CREATE DATABASE IF NOT EXISTS {DB_CONFIG['database']}")
+            conn = mysql.connector.connect(**DB_CONFIG)
         except mysql.connector.Error as e:
-            if e.errno in (1044, 1045):  # Access denied / insufficient privileges
-                print(f"⚠️ No privilege to CREATE DATABASE; proceeding with existing '{DB_CONFIG['database']}'.")
+            if e.errno == 1049:  # Unknown database
+                print(f"⚠️ Database '{DB_CONFIG['database']}' not found. Creating it...")
+                # Connect without database to create it
+                admin = mysql.connector.connect(
+                    user=DB_CONFIG['user'],
+                    password=DB_CONFIG['password'],
+                    host=DB_CONFIG['host'],
+                    port=DB_CONFIG['port'],
+                )
+                admin_cur = admin.cursor()
+                admin_cur.execute(f"CREATE DATABASE IF NOT EXISTS `{DB_CONFIG['database']}`")
+                admin_cur.close()
+                admin.close()
+                # Reconnect to the target DB
+                conn = mysql.connector.connect(**DB_CONFIG)
             else:
                 raise
-        finally:
-            cur.close()
-            conn.close()
-        print(f"✅ Database '{DB_CONFIG['database']}' is ready.")
 
-        # ✅ Second connect already uses **DB_CONFIG** (includes port & database)
-        conn = mysql.connector.connect(**DB_CONFIG)
         cur = conn.cursor()
-        cur.execute("SHOW TABLES;")
-        tables = cur.fetchall()
 
-        print("⚙️  Rebuilding schema from c.sql.")
+        # 2) Early-exit if tables already exist (prevents data loss)
+        cur.execute("SHOW TABLES;")
+        if cur.fetchone():
+            print("✅ Tables present; skipping rebuild.")
+            return
+
+        print("⚙️  Loading schema from c.sql ...")
         with open(SQL_FILE, "r", encoding="utf-8") as f:
             sql_script = f.read()
 
         cur.execute("SET FOREIGN_KEY_CHECKS=0;")
-        for raw_stmt in sql_script.split(";"):
-            stmt = raw_stmt.strip()
+        for raw in sql_script.split(";"):
+            stmt = raw.strip()
             if not stmt:
                 continue
             try:
                 cur.execute(stmt)
             except mysql.connector.Error as e:
+                # Ignore benign drop / constraint errors on fresh runs
                 if e.errno in (1051, 1091):
-                    print(f"⚠️  Ignored benign drop error {e.errno}: {e.msg}")
-                    continue
+                    print(f"⚠️  Ignored drop error {e.errno}: {e.msg}")
                 else:
                     print(f"❌ SQL error {e.errno}: {e.msg}")
                     raise
-
         cur.execute("SET FOREIGN_KEY_CHECKS=1;")
         conn.commit()
-        cur.close()
-        conn.close()
-        print("✅ Database schema and dummy data successfully reloaded from c.sql.\n")
+        print("✅ Database schema and dummy data loaded from c.sql.")
 
     except mysql.connector.Error as e:
         print(f"❌ MySQL setup failed ({e.errno}): {e.msg}")
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
+
 
 
 def get_db():

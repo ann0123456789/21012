@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   /* -------------------------------
      🌙 DARK MODE LOGIC + BACKEND SYNC
@@ -122,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ------------------------------- */
   async function removeStudentFromCourse(studentId) {
     try {
-      const res = await fetch(`/remove_from_all_classes`, {
+      const res = await fetch(`${API_BASE_URL}/remove_from_all_classes`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentId }),
@@ -144,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function setStudentActiveStatus(isActive) {
     try {
-      const res = await fetch(`/set_active?ts=${Date.now()}`, {
+      const res = await fetch(`${API_BASE_URL}/set_active?ts=${Date.now()}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),
@@ -166,10 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function updateUserPreferences(theme) {
     try {
-      const response = await fetch("/theme_change", {
+      const response = await fetch(`${API_BASE_URL}/theme_change`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ theme}),
+        body: new URLSearchParams({ theme }),
       });
       const data = await response.json();
       if (data.status === "success") {
@@ -181,5 +183,5 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("❌ Error updating preferences:", error);
     }
   }
- 
+
 });

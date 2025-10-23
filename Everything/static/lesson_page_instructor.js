@@ -1,3 +1,4 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
 
 (function () {
   const $ = (id) => document.getElementById(id);
@@ -31,7 +32,7 @@
   // Load instructors for the dropdown, and pre-select current
   async function loadInstructors(selectedId) {
     try {
-      const res = await fetch("/api/instructors");
+      const res = await fetch(`${API_BASE_URL}/api/instructors`);
       const data = await res.json();
       if (!data.ok) return;
 
@@ -54,9 +55,9 @@
   // Load available prerequisite lessons
   async function loadPrerequisites(lessonId) {
     try {
-      const res = await fetch(`/api/lessons/${lessonId}/prerequisites`);
+      const res = await fetch(`${API_BASE_URL}/api/lessons/${lessonId}/prerequisites`);
       const data = await res.json();
-      
+
       if (!data.ok) {
         console.error("Failed to load prerequisites:", data.error);
         return;
@@ -64,7 +65,7 @@
 
       availablePrerequisites = data.available_lessons || [];
       currentPrerequisite = data.current_prerequisite;
-      
+
       populatePrerequisiteDropdown();
     } catch (e) {
       console.error("Error loading prerequisites:", e);
@@ -77,7 +78,7 @@
     if (!sel) return;
 
     sel.innerHTML = "";
-  
+
     const noneOption = document.createElement("option");
     noneOption.value = "";
     noneOption.textContent = "None (No prerequisite)";
@@ -100,14 +101,14 @@
     if (!sel) return;
 
     const prerequisiteId = sel.value || null;
-    
+
     try {
-      const res = await fetch(`/api/lessons/${lessonId}/prerequisites`, {
+      const res = await fetch(`${API_BASE_URL}/api/lessons/${lessonId}/prerequisites`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prerequisite_lesson_id: prerequisiteId })
       });
-      
+
       const data = await res.json();
       if (data.ok) {
         console.log("Prerequisite updated successfully");
@@ -130,7 +131,7 @@
     if (!display) return;
 
     if (currentPrerequisite) {
-      const prereqLesson = availablePrerequisites.find(l => 
+      const prereqLesson = availablePrerequisites.find(l =>
         String(l.lesson_id) === String(currentPrerequisite)
       );
       if (prereqLesson) {
@@ -149,18 +150,18 @@
   // --- Fetch lesson details ---
   async function fetchLessonDetails(lessonId) {
     try {
-      const res = await fetch(`/get_lesson_details?lesson_id=${lessonId}`);
+      const res = await fetch(`${API_BASE_URL}/get_lesson_details?lesson_id=${lessonId}`);
       const data = await res.json();
       if (data.status === "success" && data.lessons.length > 0) {
         const detail = data.lessons[0];
-        $("lessonId").textContent     = detail.lesson_id;
-        $("lessonTitle").value        = detail.title;
-        $("estimatedTime").value      = detail.estimated_time;
-        $("objective").value          = detail.objective;
-        $("description").value        = detail.description;
-        $("designer").value           = detail.instructor;
-        $("dateCreated").textContent  = detail.date_created;
-        $("lastUpdated").textContent  = detail.last_updated;
+        $("lessonId").textContent = detail.lesson_id;
+        $("lessonTitle").value = detail.title;
+        $("estimatedTime").value = detail.estimated_time;
+        $("objective").value = detail.objective;
+        $("description").value = detail.description;
+        $("designer").value = detail.instructor;
+        $("dateCreated").textContent = detail.date_created;
+        $("lastUpdated").textContent = detail.last_updated;
 
         // Handle prerequisite data
         currentPrerequisite = detail.prerequisite_lesson_id;
@@ -168,12 +169,12 @@
 
         // Populate designer dropdown
         await loadInstructors(detail.designer_id);
-        
+
         // Load prerequisites after we have lesson details
         await loadPrerequisites(lessonId);
 
         setEditable(false);
-      }  
+      }
     } catch (err) {
       console.error("Error fetching lesson:", err);
     }
@@ -181,14 +182,14 @@
 
   // --- Lock/unlock fields ---
   function setEditable(enabled) {
-    ["lessonTitle","objective","description","designer","estimatedTime"].forEach(id=>{
+    ["lessonTitle", "objective", "description", "designer", "estimatedTime"].forEach(id => {
       const el = $(id);
       if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA")) {
         el.readOnly = !enabled;
         el.disabled = !enabled;
       }
     });
-    
+
     // Handle designer select
     const designerSel = $("designer");
     if (designerSel) designerSel.disabled = !enabled;
@@ -196,7 +197,7 @@
     // Handle prerequisite elements
     const prereqSelect = $("prerequisiteSelect");
     const prereqDisplay = $("prerequisiteDisplay");
-    
+
     if (enabled) {
       // Edit mode: show dropdown, hide display
       if (prereqSelect) prereqSelect.style.display = "block";
@@ -221,17 +222,17 @@
 
     try {
       // Save lesson details first
-      const res = await fetch(`/api/lessons/${lessonId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/lessons/${lessonId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
-      
+
       if (data.ok) {
         // Save prerequisite
         await savePrerequisite();
-        
+
         alert("✅ Lesson updated!");
         setEditable(false);
         $("editLessonBtn").style.display = "inline-block";
@@ -250,10 +251,10 @@
   // --- Fetch lesson materials ---
   async function fetchLessonMaterials(lessonId) {
     try {
-      const assignmentsRes = await fetch(`/assignment_get?lesson_id=${lessonId}`);
+      const assignmentsRes = await fetch(`${API_BASE_URL}/assignment_get?lesson_id=${lessonId}`);
       lesson.assignments = assignmentsRes.ok ? await assignmentsRes.json() : [];
 
-      const readingsRes = await fetch(`/reading_get?lesson_id=${lessonId}`);
+      const readingsRes = await fetch(`${API_BASE_URL}/reading_get?lesson_id=${lessonId}`);
       lesson.reading_list = readingsRes.ok ? await readingsRes.json() : [];
     } catch (err) {
       console.error("Error fetching materials:", err);
@@ -292,7 +293,7 @@
         if (!newTitle) return;
 
         try {
-          const res = await fetch("/edit_material", {
+          const res = await fetch(`${API_BASE_URL}/edit_material`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id, title: newTitle })
@@ -316,7 +317,7 @@
         if (!confirm("Are you sure you want to delete this item?")) return;
 
         try {
-          const res = await fetch("/delete_material", {
+          const res = await fetch(`${API_BASE_URL}/delete_material`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id })
@@ -343,7 +344,7 @@
     const title = input.value.trim();
     if (!title) return;
 
-    const endpoint = type === "assignment" ? "/add_assignment" : "/add_reading";
+    const endpoint = type === "assignment" ? `${API_BASE_URL}/add_assignment` : `${API_BASE_URL}/add_reading`;
 
     try {
       const res = await fetch(endpoint, {
@@ -365,21 +366,21 @@
   }
 
   async function fetch_classroom() {
-    try{
-      const res = await fetch(`/classrooms?lesson_id=${lessonId}`);
+    try {
+      const res = await fetch(`${API_BASE_URL}/classrooms?lesson_id=${lessonId}`);
       console.log(lessonId)
       const data = await res.json();
 
-      if (data.found && data.results.length > 0){
+      if (data.found && data.results.length > 0) {
         return data.results;
       }
-    }catch(err){
-      console.error("Failed to fetch classrooms",err);
+    } catch (err) {
+      console.error("Failed to fetch classrooms", err);
     }
   }
   async function addLessonToClassroom(classroomName, lessonId) {
     try {
-      const response = await fetch('/add_lesson_to_classroom', {
+      const response = await fetch(`${API_BASE_URL}/add_lesson_to_classroom`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -409,7 +410,7 @@
       return null;
     }
   }
-  
+
   // --- Initialize page ---
   async function initPage() {
     const classroomBox = document.getElementById("classroomBox");

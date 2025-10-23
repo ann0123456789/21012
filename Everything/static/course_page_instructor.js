@@ -1,13 +1,15 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
 
-async function fetchCourseDetail( unitId) {
+async function fetchCourseDetail(unitId) {
   if (!unitId) return null;
 
   try {
-    const response = await fetch(`http://127.0.0.1:5000/fetch_course_details?unit_id=${unitId}`);
+    const response = await fetch(`${API_BASE_URL}/fetch_course_details?unit_id=${unitId}`);
     console.log(response)
     const data = await response.json();
 
@@ -19,17 +21,17 @@ async function fetchCourseDetail( unitId) {
   }
 }
 
-async function fetch_student_details(unitId){
+async function fetch_student_details(unitId) {
   if (!unitId) return null;
 
-  try{
-    const response = await fetch(`http://127.0.0.1:5000/fetch_students?unit_id=${unitId}`)
+  try {
+    const response = await fetch(`${API_BASE_URL}/fetch_students?unit_id=${unitId}`)
     const data = await response.json();
     console.log(data)
-    if (!data.found||data.students.length ===0) return null;
+    if (!data.found || data.students.length === 0) return null;
     return data.students
-  }catch(err){
-    console.error("ERRRROORRR",err)
+  } catch (err) {
+    console.error("ERRRROORRR", err)
     return null
   }
 }
@@ -39,18 +41,18 @@ async function fetchCourseDetailWithStats(insId = 1, unitId) {
 
   try {
     const response = await fetch(
-      `/fetch_instructor_details?insId=${insId}&unit_id=${unitId}`
+      `${API_BASE_URL}/fetch_instructor_details?insId=${insId}&unit_id=${unitId}`
     );
     const data = await response.json();
 
     if (!data.found || data.results.length === 0) return null;
-    
+
     // For each lesson, get completion statistics
     const course = data.results[0];
     if (course.lessons) {
       for (let lesson of course.lessons) {
         try {
-          const statsResponse = await fetch(`/api/lessons/${lesson.lesson_id}/completion-stats`);
+          const statsResponse = await fetch(`${API_BASE_URL}/api/lessons/${lesson.lesson_id}/completion-stats`);
           const stats = await statsResponse.json();
           if (stats.ok) {
             lesson.completionStats = stats.stats;
@@ -60,7 +62,7 @@ async function fetchCourseDetailWithStats(insId = 1, unitId) {
         }
       }
     }
-    
+
     return course;
   } catch (err) {
     console.error("Failed to fetch course details:", err);
@@ -74,7 +76,7 @@ async function deleteLesson(lessonId, lessonElement) {
   }
 
   try {
-    const response = await fetch(`/api/lessons/${lessonId}`, { method: "DELETE" });
+    const response = await fetch(`${API_BASE_URL}/api/lessons/${lessonId}`, { method: "DELETE" });
     const data = await response.json();
 
     if (data.ok) {
@@ -89,14 +91,14 @@ async function deleteLesson(lessonId, lessonElement) {
   }
 }
 
-async function get_lessons(unitId){
-  try{
-    const response = await fetch(`http://127.0.0.1:5000/fetch_lessons_and_students?unit_id=${unitId}`)
+async function get_lessons(unitId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/fetch_lessons_and_students?unit_id=${unitId}`)
     const data = await response.json();
     console.log(data.lessons)
     if (!data.found) return null
     return data.lessons
-  }catch (err){
+  } catch (err) {
     console.log(err)
     return null
   }
@@ -157,16 +159,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       // --- Card view ---
       const cardFragment = cardTemplate.content.cloneNode(true);
       const card = cardFragment.children[0];
-      card.querySelector("[data-lesson-header]").textContent = `Lesson ${
-        index + 1
-      }`;
+      card.querySelector("[data-lesson-header]").textContent = `Lesson ${index + 1
+        }`;
       card.querySelector("[data-lesson-body]").textContent = lesson.name;
       card.querySelector("[data-lesson-credit]").textContent =
-        30/num;
+        30 / num;
 
       const deleteBtnCard = card.querySelector(".delete-lesson-btn");
       deleteBtnCard.addEventListener("click", (e) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
         deleteLesson(lesson.lesson_id, card);
       });
 
@@ -178,16 +179,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       // --- List view --- 
       const listFragment = listTemplate.content.cloneNode(true);
       const listItem = listFragment.children[0];
-      listItem.querySelector("[data-lesson-header]").textContent = `Lesson ${
-        index + 1
-      }`;
+      listItem.querySelector("[data-lesson-header]").textContent = `Lesson ${index + 1
+        }`;
       listItem.querySelector("[data-lesson-body]").textContent = lesson.name;
       listItem.querySelector("[data-lesson-credit]").textContent =
-        30/num;
+        30 / num;
 
       const deleteBtnList = listItem.querySelector(".delete-lesson-btn");
       deleteBtnList.addEventListener("click", (e) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
         deleteLesson(lesson.lesson_id, listItem);
       });
 
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const formData = new FormData();
       formData.append("unit_id", course.unitId);
 
-      const response = await fetch("/create_lesson_ins", {
+      const response = await fetch(`${API_BASE_URL}/create_lesson_ins`, {
         method: "POST",
         body: formData,
       });
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const formData = new FormData();
       formData.append("unit_id", course.unitId);
 
-      const response = await fetch("/create_lesson_ins", {
+      const response = await fetch(`${API_BASE_URL}/create_lesson_ins`, {
         method: "POST",
         body: formData,
       });
@@ -269,10 +269,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   window.addEventListener("pageshow", async (event) => {
-  if (event.persisted) {
-    // Page was restored from bfcache → refetch course data
-    location.reload(); // simplest fix (forces reload)
-  }
-});
+    if (event.persisted) {
+      // Page was restored from bfcache → refetch course data
+      location.reload(); // simplest fix (forces reload)
+    }
+  });
 
 });

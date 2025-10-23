@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const studentId = params.get("student_id");
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchStudentProfile(studentId) {
     try {
-        const response = await fetch(`/api/student/profile/${studentId}`, { credentials: "include" });
+        const response = await fetch(`${API_BASE_URL}/api/student/profile/${studentId}`, { credentials: "include" });
         const data = await response.json();
 
         if (response.ok && data.status === "success") {

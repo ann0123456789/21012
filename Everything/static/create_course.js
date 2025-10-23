@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 const courseIdInput = document.getElementById("courseId");
 const courseNameInput = document.getElementById("courseName");
 const courseDescInput = document.getElementById("courseDesc");
@@ -24,7 +26,7 @@ createBtn.onclick = async () => {
   }
 
   try {
-    const response = await fetch("/create", {
+    const response = await fetch(`${API_BASE_URL}/create`, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(course),

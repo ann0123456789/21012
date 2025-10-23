@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchEnrolledStudents();
 });
@@ -5,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function fetchEnrolledStudents() {
     const gridContainer = document.getElementById("studentCardGrid");
     try {
-        const response = await fetch("/api/instructor/enrolled_students", { credentials: "include" });
+        const response = await fetch(`${API_BASE_URL}/api/instructor/enrolled_students`, { credentials: "include" });
         const data = await response.json();
 
         if (response.ok && data.status === "success") {
@@ -21,7 +23,7 @@ async function fetchEnrolledStudents() {
 
 function renderStudentCards(students) {
     const gridContainer = document.getElementById("studentCardGrid");
-    gridContainer.innerHTML = ""; 
+    gridContainer.innerHTML = "";
 
     if (!students || students.length === 0) {
         gridContainer.innerHTML = `<p>No students are enrolled in your courses.</p>`;

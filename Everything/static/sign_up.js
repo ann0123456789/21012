@@ -1,8 +1,10 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signupForm");
 
   form.addEventListener("submit", async function (e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     // Get form values
     const title = form.title.value;
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch("/signup", {
+      const response = await fetch(`${API_BASE_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

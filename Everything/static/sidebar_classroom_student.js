@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 // ---------- Fetch helpers ----------
 async function fetchJSON(url, opts = {}) {
   const res = await fetch(url, opts);
@@ -10,12 +12,12 @@ async function fetchJSON(url, opts = {}) {
 
 async function fetchClassroomDetails(classroomId) {
   if (!classroomId) return null;
-  const data = await fetchJSON(`/indi_classroom?classroom_id=${encodeURIComponent(classroomId)}`);
+  const data = await fetchJSON(`${API_BASE_URL}/indi_classroom?classroom_id=${encodeURIComponent(classroomId)}`);
   return (data && data.found && Array.isArray(data.results) && data.results[0]) || null;
 }
 
 async function fetchLessonsInClassroom(classroomId) {
-  const data = await fetchJSON(`/fetch_classroom_lessons?classroom_id=${encodeURIComponent(classroomId)}`);
+  const data = await fetchJSON(`${API_BASE_URL}/fetch_classroom_lessons?classroom_id=${encodeURIComponent(classroomId)}`);
   return (data && data.found && Array.isArray(data.results)) ? data.results : [];
 }
 
@@ -31,20 +33,20 @@ function renderLessons(lessons, cardViewEl, listContainerEl, cardTpl, listTpl) {
 
   lessons.forEach(l => {
     const title = l.title ?? l.name ?? "";
-    const body  = l.description ?? `Lesson ID: ${l.lesson_id}`;
+    const body = l.description ?? `Lesson ID: ${l.lesson_id}`;
     const credit = l.credit ?? l.credits ?? "";
 
     // Card
     const c = cardTpl.content.cloneNode(true);
     c.querySelector("[data-lesson-header]").textContent = title;
-    c.querySelector("[data-lesson-body]").textContent   = body;
+    c.querySelector("[data-lesson-body]").textContent = body;
     c.querySelector("[data-lesson-credit]").textContent = credit;
     cardViewEl.appendChild(c);
 
     // List
     const r = listTpl.content.cloneNode(true);
     r.querySelector("[data-lesson-header]").textContent = title;
-    r.querySelector("[data-lesson-body]").textContent   = body;
+    r.querySelector("[data-lesson-body]").textContent = body;
     r.querySelector("[data-lesson-credit]").textContent = credit;
     listContainerEl.appendChild(r);
   });
@@ -56,10 +58,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const classID = params.get("classroom_id");
 
   const classroomNameEl = document.getElementById("classroomName");
-  const classroomIdBox  = document.getElementById("classroomIdBox");
-  const supervisorBox   = document.getElementById("supervisorNameBox");
-  const studentListEl   = document.getElementById("studentList");
-  const durationBox     = document.getElementById("durationBox");
+  const classroomIdBox = document.getElementById("classroomIdBox");
+  const supervisorBox = document.getElementById("supervisorNameBox");
+  const studentListEl = document.getElementById("studentList");
+  const durationBox = document.getElementById("durationBox");
 
   const cardViewEl = document.getElementById("cardView");
   const listViewEl = document.getElementById("listView");
@@ -81,9 +83,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Basic info
     classroomNameEl.textContent = cls.classroom_name || "";
-    classroomIdBox.textContent  = cls.classroom_id ?? "";
-    supervisorBox.textContent   = cls.instructor_name || cls.instructor_id || ""; 
-    durationBox.textContent     = cls.duration || "";
+    classroomIdBox.textContent = cls.classroom_id ?? "";
+    supervisorBox.textContent = cls.instructor_name || cls.instructor_id || "";
+    durationBox.textContent = cls.duration || "";
 
     // Students
     studentListEl.innerHTML = "";

@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const smallBtn = document.querySelector(".small-button");
   const mediumBtn = document.querySelector(".medium-button");
@@ -33,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     highlightButton(font);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/font_change", {
+      const response = await fetch(`${API_BASE_URL}/font_change`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ font }),
@@ -54,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // --- Fetch DB preference ---
   async function getUserPreferences() {
     try {
-      const response = await fetch("/get_font", {
+      const response = await fetch(`${API_BASE_URL}/get_font`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // ✅ send session cookie

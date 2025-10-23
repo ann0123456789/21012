@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 // =====================
 // STUDENT REPORT DASHBOARD (Course list + Detail page)
 // =====================
@@ -15,7 +17,7 @@ function setText(id, text) {
 // Fetch all enrolled courses
 async function fetchAllCourses() {
   try {
-    const res = await fetch(`http://127.0.0.1:5000/student_report_data`, {
+    const res = await fetch(`${API_BASE_URL}/student_report_data`, {
       credentials: "include",
     });
 
@@ -62,7 +64,7 @@ function initializeViewToggle() {
 
   toggleBtn.addEventListener("click", () => {
     const isListViewVisible = listView.style.display !== "none";
-    
+
     if (isListViewVisible) {
       // Switch to Grid View
       cardView.style.display = "grid";
@@ -88,7 +90,7 @@ function renderCourseCard(course, template) {
   clone.querySelector("[data-course-name]").textContent = course.name;
   clone.querySelector("[data-course-desc]").textContent = course.desc;
   clone.querySelector("[data-course-credit]").textContent = 30;
-  
+
   // Set status badge
   const statusBadge = clone.querySelector("[data-course-status]");
   if (statusBadge) {
@@ -116,7 +118,7 @@ function renderCourseListItem(course, template) {
   clone.querySelector("[data-course-name]").textContent = course.name;
   clone.querySelector("[data-course-desc]").textContent = course.desc;
   clone.querySelector("[data-course-credit]").textContent = 30;
-  
+
   // Set status badge
   const statusBadge = clone.querySelector("[data-course-status]");
   if (statusBadge) {
@@ -147,7 +149,7 @@ async function renderDashboard() {
   const listContainer = document.getElementById("lessonListContainer");
   const cardTemplate = document.getElementById("courseCardTemplate");
   const listTemplate = document.getElementById("courseListTemplate");
-  
+
   if (!cardView || !listView || !listContainer || !cardTemplate || !listTemplate) {
     console.error("Required DOM elements not found");
     return;
@@ -175,9 +177,9 @@ async function renderDashboard() {
   const progressFill = document.getElementById("creditProgress");
   const progressText = document.getElementById("creditText");
 
-  const percent = totalLessonsInAllCourses > 0 ? 
+  const percent = totalLessonsInAllCourses > 0 ?
     Math.min((completedLessonsInAllCourses / totalLessonsInAllCourses) * 100, 100) : 0;
-  
+
   if (progressFill) progressFill.style.width = `${percent}%`;
   if (progressText) {
     progressText.textContent = `${completedLessonsInAllCourses} / ${totalLessonsInAllCourses} Lessons (${percent.toFixed(1)}%)`;

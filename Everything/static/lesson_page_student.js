@@ -1,3 +1,4 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
 
 
 (function () {
@@ -37,7 +38,7 @@
       name.className = "course-name";
       name.textContent = c.classroom_name;
       card.addEventListener("click", () => onClassroomClick(c.classroom_id, c.classroom_name));
-      
+
       card.appendChild(code);
       card.appendChild(name);
       grid.appendChild(card);
@@ -71,7 +72,7 @@
 
   async function fetchClassrooms() {
     try {
-      const res = await fetch("/get_enrolled_classrooms");
+      const res = await fetch(`${API_BASE_URL}/get_enrolled_classrooms`);
       const data = await res.json();
       if (data.status === "success") {
         renderClassrooms(data.classrooms);
@@ -90,9 +91,9 @@
   // Check lesson status and display appropriate UI
   async function checkLessonStatus() {
     try {
-      const res = await fetch(`/api/lessons/status/${lessonId}`); 
+      const res = await fetch(`${API_BASE_URL}/api/lessons/status/${lessonId}`);
       const data = await res.json();
-      
+
       if (data.ok) {
         updateLessonStatus(data);
       }
@@ -105,18 +106,18 @@
   function updateLessonStatus(statusData) {
     const statusIndicator = document.getElementById("lessonStatusIndicator");
     const lessonContent = document.querySelector(".main-content");
-    
+
     // Remove any existing status classes
     lessonContent.classList.remove("lesson-locked", "lesson-available", "lesson-completed");
-    
+
     if (statusData.locked) {
       // Lesson is locked
       lessonContent.classList.add("lesson-locked");
-      
+
       if (!statusIndicator) {
         createStatusIndicator();
       }
-      
+
       const indicator = document.getElementById("lessonStatusIndicator");
       indicator.className = "status-indicator locked";
       indicator.innerHTML = `
@@ -129,18 +130,18 @@
           </button>
         </div>
       `;
-      
+
       // Disable lesson content
       disableLessonContent();
-      
+
     } else if (statusData.completed) {
       // Lesson is completed
       lessonContent.classList.add("lesson-completed");
-      
+
       if (!statusIndicator) {
         createStatusIndicator();
       }
-      
+
       const indicator = document.getElementById("lessonStatusIndicator");
       indicator.className = "status-indicator completed";
       indicator.innerHTML = `
@@ -150,11 +151,11 @@
           <p>You have successfully completed this lesson!</p>
         </div>
       `;
-      
+
     } else {
       // Lesson is available
       lessonContent.classList.add("lesson-available");
-      
+
       if (statusIndicator) {
         statusIndicator.remove();
       }
@@ -166,7 +167,7 @@
     const indicator = document.createElement("div");
     indicator.id = "lessonStatusIndicator";
     indicator.className = "status-indicator";
-    
+
     const mainContent = document.querySelector(".main-content");
     const header = mainContent.querySelector("header");
     header.insertAdjacentElement("afterend", indicator);
@@ -191,13 +192,13 @@
   }
 
   // Navigate to prerequisite lesson
-  window.goToPrerequisite = function(prerequisiteLessonId) {
+  window.goToPrerequisite = function (prerequisiteLessonId) {
     window.location.href = `/lesson_page_student?lesson_id=${prerequisiteLessonId}`;
   };
 
   async function fetchLessonDetails() {
     try {
-      const res = await fetch(`/get_lesson_details?lesson_id=${lessonId}`);
+      const res = await fetch(`${API_BASE_URL}/get_lesson_details?lesson_id=${lessonId}`);
       const data = await res.json();
       if (data.status === "success" && data.lessons.length > 0) {
         lesson = data.lessons[0];
@@ -235,12 +236,12 @@
 
   function displayPrerequisiteInfo(lessonData) {
     const prerequisiteInfo = document.getElementById("prerequisiteInfo");
-    
+
     if (lessonData.prerequisite_lesson) {
       if (!prerequisiteInfo) {
         createPrerequisiteInfoElement();
       }
-      
+
       const info = document.getElementById("prerequisiteInfo");
       info.innerHTML = `
         <div class="prerequisite-info-content">
@@ -260,17 +261,17 @@
     const info = document.createElement("div");
     info.id = "prerequisiteInfo";
     info.className = "prerequisite-info";
-    
+
     const lessonInfo = document.querySelector(".lesson-info");
     lessonInfo.insertAdjacentElement("beforebegin", info);
   }
 
   async function fetchLessonMaterials() {
     try {
-      const assignRes = await fetch(`/assignment_get?lesson_id=${lessonId}`);
+      const assignRes = await fetch(`${API_BASE_URL}/assignment_get?lesson_id=${lessonId}`);
       lesson.assignments = assignRes.ok ? await assignRes.json() : [];
 
-      const readRes = await fetch(`/reading_get?lesson_id=${lessonId}`);
+      const readRes = await fetch(`${API_BASE_URL}/reading_get?lesson_id=${lessonId}`);
       lesson.reading_list = readRes.ok ? await readRes.json() : [];
     } catch (err) {
       console.error(err);
@@ -300,7 +301,7 @@
       checkbox.addEventListener("change", async e => {
         checkbox.disabled = true;
         try {
-          const res = await fetch(`/update_material_completion`, {
+          const res = await fetch(`${API_BASE_URL}/update_material_completion`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: item.id, completed: e.target.checked })
@@ -308,10 +309,10 @@
           if (res.ok) {
             item.completed = e.target.checked;
             label.classList.toggle("completed", item.completed);
-            
+
             if (checkAllCompleted()) {
               setTimeout(() => {
-                checkLessonStatus(); 
+                checkLessonStatus();
               }, 500);
             }
           } else {
@@ -333,7 +334,7 @@
   function checkAllCompleted() {
     const allMaterials = [...lesson.assignments, ...lesson.reading_list];
     return allMaterials.length > 0 && allMaterials.every(item => item.completed);
-  } 
+  }
 
   function renderAssignments() {
     renderList("assignmentsList", lesson.assignments);
@@ -349,38 +350,37 @@
     await fetchLessonDetails();
     await fetchLessonMaterials();
     await fetchClassrooms();
-    
+
     renderAssignments();
     renderReadingList();
-    
+
     await checkLessonStatus();
   }
   function refreshAllData() {
-  // Refresh the lesson materials and assignments
-  fetchLessonMaterials()
-    .then(() => {
-      renderAssignments();
-      renderReadingList();
-    })
-    .catch(err => console.error("Error refreshing lesson materials:", err));
+    // Refresh the lesson materials and assignments
+    fetchLessonMaterials()
+      .then(() => {
+        renderAssignments();
+        renderReadingList();
+      })
+      .catch(err => console.error("Error refreshing lesson materials:", err));
 
-  // Refresh the classrooms
-  fetchClassrooms()
-    .catch(err => console.error("Error refreshing classrooms:", err));
+    // Refresh the classrooms
+    fetchClassrooms()
+      .catch(err => console.error("Error refreshing classrooms:", err));
 
-  // Refresh the lesson status
-  checkLessonStatus()
-    .catch(err => console.error("Error refreshing lesson status:", err));
+    // Refresh the lesson status
+    checkLessonStatus()
+      .catch(err => console.error("Error refreshing lesson status:", err));
   }
 
 
 
-  window.addEventListener("pageshow", function(event) { 
-  if (event.persisted) {
-    // Page was restored from bfcache → refetch course data
-    window.location.reload(true); // simplest fix (forces reload)
-  }
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+      // Page was restored from bfcache → refetch course data
+      window.location.reload(true); // simplest fix (forces reload)
+    }
   });
   document.addEventListener("DOMContentLoaded", initPage);
 })();
-

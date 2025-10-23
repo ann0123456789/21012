@@ -1,13 +1,16 @@
+const API_BASE_URL = "https://edubridge-94lr.onrender.com";
+
 async function fetchProfile() {
   try {
     // Use your existing profile API (from Student Profile page)
-    const res = await fetch("/api/student/profile", { credentials: "include" });
+    const res = await fetch(`${API_BASE_URL}/api/student/profile`, { credentials: "include" });
     const data = await res.json();
-
+    console.log(data)
     if (data.status !== "success") {
       alert("Error fetching profile: " + (data.message || "Unknown error"));
       return;
     }
+
 
     const p = data.profile;
     // Fill the read-only fields
@@ -41,20 +44,20 @@ async function fetchProfile() {
 }
 
 function populateForm(student) {
-    document.getElementById("title").value = student.title || "Ms"; 
-    document.getElementById("firstName").value = student.firstName;
-    document.getElementById("lastName").value = student.lastName;
-    document.getElementById("email").value = student.email;
-    document.getElementById("password").value = student.password;
-    
-    document.getElementById("password").type = "text";
+  document.getElementById("title").value = student.title || "Ms";
+  document.getElementById("firstName").value = student.firstName;
+  document.getElementById("lastName").value = student.lastName;
+  document.getElementById("email").value = student.email;
+  document.getElementById("password").value = student.password;
 
-    const statusBtn = document.getElementById("statusBtn");
-    updateStatusButton(statusBtn, student.status);
+  document.getElementById("password").type = "text";
+
+  const statusBtn = document.getElementById("statusBtn");
+  updateStatusButton(statusBtn, student.status);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    fetchProfile();
+  fetchProfile();
 });
 
 function updateStatusButton(btn, status) {
