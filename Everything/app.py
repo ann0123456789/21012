@@ -59,7 +59,7 @@ def setup_database():
             else:
                 raise
 
-        cur = conn.cursor()
+        cur = conn.cursor(dictionary=True, buffered=True)
 
         # 2) Early-exit if tables already exist (prevents data loss)
         cur.execute("SHOW TABLES;")
